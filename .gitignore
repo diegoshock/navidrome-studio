@@ -48,3 +48,6 @@ zz_*_test.go
 # wazero compilation cache for the plugins test suite
 /plugins/testdata/.wazero-cache/
 /plugins/testdata/*.stage/
+
+# The Unraid template is source, not a generated Navidrome binary.
+!unraid/navidrome-studio.xml

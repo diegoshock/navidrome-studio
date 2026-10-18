@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>navidrome-studio</Name>
+  <Repository>ghcr.io/diegoshock/navidrome-studio:latest</Repository>
+  <Registry>https://github.com/users/diegoshock/packages/container/package/navidrome-studio</Registry>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/diegoshock/navidrome-studio</Support>
+  <Project>https://github.com/diegoshock/navidrome-studio</Project>
+  <Overview>Versión no oficial de Navidrome 0.64.2 con apariencia Studio clara y oscura, inspirada en Apple Music. Requiere publicar la imagen y establecer visibilidad Public. Usa datos separados para probarla junto a tu Navidrome actual; nunca compartas /data entre dos servidores activos. Linux amd64.</Overview>
+  <Category>MediaApp:Music</Category>
+  <WebUI>http://[IP]:[PORT:4533]/</WebUI>
+  <Icon/>
+  <ExtraParams>--user 99:100 --security-opt=no-new-privileges --cap-drop=ALL</ExtraParams>
+  <PostArgs/>
+  <Config Name="Puerto Web" Target="4533" Default="4534" Mode="tcp" Description="Contenedor 4533; host 4534 para coexistir con Navidrome" Type="Port" Display="always" Required="true" Mask="false">4534</Config>
+  <Config Name="Datos de Studio" Target="/data" Default="/mnt/user/appdata/navidrome-studio" Mode="rw" Description="Carpeta NUEVA, escribible por UID 99/GID 100. No uses los datos del Navidrome activo." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/navidrome-studio</Config>
+  <Config Name="Biblioteca musical" Target="/music" Default="/mnt/user/music" Mode="ro" Description="Adapta esta ruta a tu música; solo lectura" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/music</Config>
+  <Config Name="Tema predeterminado" Target="ND_DEFAULTTHEME" Default="Studio" Mode="" Description="Studio o Studio Dark. Las preferencias existentes pueden prevalecer." Type="Variable" Display="always" Required="true" Mask="false">Studio</Config>
+  <Config Name="Idioma" Target="ND_DEFAULTLANGUAGE" Default="es" Mode="" Description="Idioma predeterminado" Type="Variable" Display="advanced" Required="false" Mask="false">es</Config>
+  <Config Name="Animación de carátula" Target="ND_ENABLECOVERANIMATION" Default="false" Mode="" Description="Mantener la carátula fija" Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+</Container>
