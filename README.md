@@ -10,7 +10,7 @@ Las capturas muestran una biblioteca sintética de prueba. Studio conserva el se
 
 ## Estado y publicación en GHCR
 
-La imagen se ha compilado y ejecutado localmente en **linux/amd64**. El workflow está preparado; esto **no significa que el paquete ya esté publicado ni disponible para descargar**.
+La primera imagen **linux/amd64** ya está publicada en GHCR. Se verificó su descarga anónima con Docker y su ejecución como `0.64.2-studio.1`. Puedes usarla directamente en Unraid. Consulta [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml) para el estado de las siguientes actualizaciones.
 
 Cada push a `main` activa el workflow **Test and publish Navidrome Studio** prueba el frontend y publica:
 
