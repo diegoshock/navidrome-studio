@@ -1,6 +1,6 @@
 # Navidrome Studio: native Linux build. Supply a trusted build_ca secret only
 # when building behind an HTTPS inspection proxy; TLS verification stays enabled.
-FROM node:24-bookworm-slim AS studio-ui
+FROM node:26-bookworm-slim AS studio-ui
 WORKDIR /src/ui
 COPY ui/package.json ui/package-lock.json ./
 COPY ui/bin ./bin
