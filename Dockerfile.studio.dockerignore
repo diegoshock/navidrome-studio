@@ -1,0 +1,16 @@
+.git
+.github
+ui/node_modules
+ui/build
+!ui/build/.gitkeep
+data
+music
+*.db
+navidrome.toml
+.env
+tmp
+dist
+binaries
+cache
+node_modules
+*.log

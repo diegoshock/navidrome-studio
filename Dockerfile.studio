@@ -1,0 +1,36 @@
+# Navidrome Studio: native Linux build. Supply a trusted build_ca secret only
+# when building behind an HTTPS inspection proxy; TLS verification stays enabled.
+FROM node:24-bookworm-slim AS studio-ui
+WORKDIR /src/ui
+COPY ui/package.json ui/package-lock.json ./
+COPY ui/bin ./bin
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/build_ca; fi; \
+    npm ci --no-audit --no-fund
+COPY ui ./
+RUN npm run build
+
+FROM golang:1.27-bookworm AS studio-build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca; fi; \
+    go mod download
+COPY . .
+RUN tar --exclude='./ui/build' --exclude='./ui/node_modules' -czf /tmp/studio-source.tar.gz .
+COPY --from=studio-ui /src/ui/build ./ui/build
+ARG STUDIO_REVISION=local
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=1 GOMAXPROCS=4 go build -p 4 -tags=netgo,sqlite_fts5,nodynamic \
+    -ldflags="-s -w -linkmode=external -extldflags '-static -latomic' -X github.com/navidrome/navidrome/consts.gitTag=v0.64.2-studio.1 -X github.com/navidrome/navidrome/consts.gitSha=${STUDIO_REVISION}" \
+    -o /out/navidrome .
+RUN /out/navidrome --version
+
+FROM deluan/navidrome:0.64.2
+LABEL org.opencontainers.image.title="Navidrome Studio (unofficial)" \
+      org.opencontainers.image.description="Navidrome with a clean, artwork-first Studio interface. Corresponding source is included in /usr/share/navidrome-studio/source.tar.gz." \
+      org.opencontainers.image.licenses="GPL-3.0-only"
+COPY --from=studio-build /out/navidrome /app/navidrome
+COPY --from=studio-build /tmp/studio-source.tar.gz /usr/share/navidrome-studio/source.tar.gz
+ENV ND_DEFAULTTHEME=Studio ND_ENABLECOVERANIMATION=false
+# Keep the upstream entrypoint, port 4533, music/data mounts, and runtime tools.
