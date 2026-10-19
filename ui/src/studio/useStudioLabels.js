@@ -2,6 +2,18 @@ import { useLocale } from 'react-admin'
 
 const labels = {
   en: {
+    nowPlaying: 'Now playing',
+    queue: 'Play queue',
+    repeat: 'Repeat',
+    progress: 'Playback progress',
+    mute: 'Mute',
+    unmute: 'Unmute',
+    playerOptions: 'Playback options',
+    saveQueue: 'Save queue as playlist',
+    addFavorite: 'Add to favorites',
+    removeFavorite: 'Remove from favorites',
+    playAll: 'Play all',
+    shuffle: 'Shuffle',
     library: 'YOUR LIBRARY',
     navigation: 'Music library',
     selectionHint:
@@ -21,6 +33,18 @@ const labels = {
     shortcuts: 'Browse your library',
   },
   es: {
+    nowPlaying: 'Reproduciendo ahora',
+    queue: 'Cola de reproducción',
+    repeat: 'Repetir',
+    progress: 'Progreso de reproducción',
+    mute: 'Silenciar',
+    unmute: 'Activar sonido',
+    playerOptions: 'Opciones de reproducción',
+    saveQueue: 'Guardar cola como playlist',
+    addFavorite: 'Añadir a favoritos',
+    removeFavorite: 'Quitar de favoritos',
+    playAll: 'Reproducir todo',
+    shuffle: 'Aleatorio',
     library: 'TU BIBLIOTECA',
     navigation: 'Biblioteca musical',
     selectionHint:

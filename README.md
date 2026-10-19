@@ -4,11 +4,13 @@ Versión no oficial de **Navidrome 0.64.2** con una interfaz oscura y minimalist
 
 La navegación vive en el lateral: **Canciones → Artistas → Álbumes → Playlists**. El engranaje inferior conserva los ajustes personales, administración y cuenta; actualizar, actividad y reproducción actual también están en el lateral. No hay barra superior ni accesos a Radios o Shares. Las playlists, búsqueda, favoritos, cola, descargas y controles del reproductor siguen disponibles.
 
+El reproductor inferior organiza la portada y los datos a la izquierda, los controles y el progreso en el centro, y la cola con el volumen a la derecha. El menú **⋯** conserva favoritos, guardar la cola como playlist, letras, calidad del audio y cerrar el reproductor. **Reproducir todo** respeta la búsqueda, los filtros y el orden elegidos; **Aleatorio** conserva la selección aleatoria de hasta 500 canciones. El lateral se desplaza sin mostrar una barra blanca.
+
 Mantén pulsada una canción durante medio segundo para seleccionarla y toca otras para añadirlas a la selección. Las acciones y el contador aparecen durante la selección; **×** la cancela. Con teclado, **Espacio** selecciona, **Enter** reproduce o alterna la selección y **Esc** cancela. Desplazar o arrastrar cancela la pulsación prolongada. El modo de selección conserva las acciones permitidas por cada lista y sus permisos.
 
 ![Biblioteca de canciones de Studio](docs/studio/screenshots/studio-songs.png)
 
-[Ver móvil](docs/studio/screenshots/studio-mobile.png) · [Ver selección táctil](docs/studio/screenshots/studio-selection.png)
+[Ver móvil](docs/studio/screenshots/studio-mobile.png) · [Ver selección táctil](docs/studio/screenshots/studio-selection.png) · [Ver fondo de artista](docs/studio/screenshots/studio-album-background.png)
 
 Las capturas muestran una biblioteca sintética de prueba. Studio conserva el servidor, autenticación, escáner, reproducción y API Subsonic/OpenSubsonic de Navidrome. No incorpora el clasificador de géneros de Playlistr: Playlistr sigue siendo una aplicación independiente que se puede conectar a este servidor.
 
@@ -62,6 +64,12 @@ La [plantilla XML directa](https://raw.githubusercontent.com/diegoshock/navidrom
 Tus usuarios, favoritos y playlists actuales no aparecen automáticamente en esta instalación de prueba. Esta versión de Studio usa la misma base que **Navidrome 0.64.2**. Para una migración posterior, detén el original y respalda sus datos completos antes de copiar o cambiar su carpeta de datos. Evita abrir una base de datos de una versión más reciente con una versión anterior. Para volver al original durante la prueba, basta con detener Studio y usar el servidor que ya tenías.
 
 Para conectar Playlistr a la instancia de prueba, usa `http://IP-DE-UNRAID:4534` y las credenciales de Studio. Los clientes Subsonic pueden usar esa misma dirección.
+
+## Fondos de artistas
+
+Las cabeceras de álbumes usan la imagen del artista principal del álbum, desenfocada y oscurecida. La vista del artista utiliza su propia imagen y las playlists su portada. Cuando falta una foto, el álbum conserva su portada como fondo.
+
+Se reutiliza el sistema de imágenes de Navidrome: fotos subidas desde la ficha del artista, archivos locales y proveedores de metadatos configurados, como Deezer. Para obtener imágenes desde internet, mantén `ND_ENABLEEXTERNALSERVICES=true` y `ND_DEEZER_ENABLED=true` (valores predeterminados), con `external` en `ND_ARTISTARTPRIORITY`. No hace falta una clave de IA ni OpenRouter. La disponibilidad depende del proveedor y de la identificación del artista; también puedes subir una imagen manualmente desde su ficha. Las imágenes se sirven y almacenan mediante Navidrome, sin añadir un servicio externo al navegador.
 
 ## Código y compilación
 

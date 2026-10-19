@@ -35,6 +35,8 @@ import { useDateLocale } from '../i18n/useDateLocale'
 import { formatFullDate, intersperse } from '../utils'
 import AlbumExternalLinks from './AlbumExternalLinks'
 import { SafeHTML } from '../common/SafeHTML'
+import { StudioBackdrop } from '../studio/StudioBackdrop'
+import { useBackdropLayout } from '../studio/useBackdropLayout'
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -231,6 +233,7 @@ const AlbumDetails = (props) => {
   const isXsmall = useMediaQuery((theme) => theme.breakpoints.down('xs'))
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('lg'))
   const classes = useStyles()
+  const backdrop = useBackdropLayout()
   const [expanded, setExpanded] = useState(false)
   const [albumInfo, setAlbumInfo] = useState()
   const [isLightboxOpen, setLightboxOpen] = useState(false)
@@ -259,7 +262,13 @@ const AlbumDetails = (props) => {
   const fullImageUrl = subsonic.getCoverArtUrl(record)
 
   return (
-    <Card className={classes.root}>
+    <Card className={`${classes.root} ${backdrop.root}`}>
+      <StudioBackdrop
+        record={record}
+        artistId={
+          record.participants?.albumartist?.[0]?.id || record.albumArtistId
+        }
+      />
       <div className={classes.cardContents}>
         <div className={classes.coverParent}>
           <Artwork

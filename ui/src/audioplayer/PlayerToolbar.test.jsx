@@ -18,6 +18,8 @@ vi.mock('@material-ui/core', async () => {
 
 vi.mock('react-admin', () => ({
   useGetOne: vi.fn(),
+  useTranslate: () => (key) => key,
+  useLocale: () => 'en',
 }))
 
 vi.mock('react-redux', () => ({
@@ -25,6 +27,7 @@ vi.mock('react-redux', () => ({
 }))
 
 vi.mock('../common', () => ({
+  QualityInfo: () => <span>Quality</span>,
   LoveButton: ({ className, disabled }) => (
     <button data-testid="love-button" className={className} disabled={disabled}>
       Love

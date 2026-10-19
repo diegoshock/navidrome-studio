@@ -8,9 +8,9 @@ import useStyle from './styles'
 import { useDrag } from 'react-dnd'
 import { DraggableTypes } from '../consts'
 
-const AudioTitle = React.memo(({ audioInfo, gainInfo, isMobile }) => {
+const AudioTitle = React.memo(({ audioInfo, gainInfo, isMobile, compact }) => {
   const classes = useStyle()
-  const className = classes.audioTitle
+  const className = clsx(classes.audioTitle, compact && classes.compactTitle)
   const isDesktop = useMediaQuery('(min-width:810px)')
 
   const song = audioInfo.song
@@ -54,10 +54,15 @@ const AudioTitle = React.memo(({ audioInfo, gainInfo, isMobile }) => {
       : `/album/${song.albumId}/show`
 
   return (
-    <Link to={linkTo} className={className} ref={dragSongRef}>
+    <Link
+      to={linkTo}
+      className={className}
+      ref={dragSongRef}
+      title={compact ? `${title} · ${song.artist} · ${song.album}` : undefined}
+    >
       <span>
         <span className={clsx(classes.songTitle, 'songTitle')}>{title}</span>
-        {isDesktop && (
+        {isDesktop && !compact && (
           <QualityInfo
             record={qi}
             className={classes.qualityInfo}
@@ -66,7 +71,11 @@ const AudioTitle = React.memo(({ audioInfo, gainInfo, isMobile }) => {
           />
         )}
       </span>
-      {isMobile ? (
+      {compact ? (
+        <span className={classes.songInfo}>
+          <span className="songArtist">{song.artist}</span>
+        </span>
+      ) : isMobile ? (
         <>
           <span className={classes.songInfo}>
             <span className={'songArtist'}>{song.artist}</span>

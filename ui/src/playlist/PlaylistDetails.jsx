@@ -15,6 +15,8 @@ import {
 } from '../common'
 import subsonic from '../subsonic'
 import { Artwork } from '../common/Artwork'
+import { StudioBackdrop } from '../studio/StudioBackdrop'
+import { useBackdropLayout } from '../studio/useBackdropLayout'
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -103,13 +105,15 @@ const PlaylistDetails = (props) => {
   const { record = {} } = props
   const translate = useTranslate()
   const classes = useStyles()
+  const backdrop = useBackdropLayout()
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('lg'))
   const [isLightboxOpen, setLightboxOpen] = useState(false)
 
   const fullImageUrl = subsonic.getCoverArtUrl(record)
 
   return (
-    <Card className={classes.root}>
+    <Card className={`${classes.root} ${backdrop.root}`}>
+      <StudioBackdrop record={record} />
       <div className={classes.cardContents}>
         <div className={classes.coverParent}>
           <Artwork

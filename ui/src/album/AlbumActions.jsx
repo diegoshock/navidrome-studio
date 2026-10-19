@@ -28,6 +28,7 @@ import {
 import { formatBytes } from '../utils'
 import config from '../config'
 import { RefreshMetadataButton, ToggleFieldsMenu } from '../common'
+import { PlaybackButton } from '../common/PlaybackButton'
 
 const useStyles = makeStyles({
   toolbar: {
@@ -39,12 +40,17 @@ const useStyles = makeStyles({
   },
 })
 
-const AlbumButton = ({ children, ...rest }) => {
+const AlbumButton = ({ children, featured, ...rest }) => {
   const record = useRecordContext(rest) || {}
+  const Component = featured ? PlaybackButton : Button
   return (
-    <Button {...rest} disabled={record.missing}>
+    <Component
+      {...rest}
+      {...(featured && { secondary: featured === 'shuffle' })}
+      disabled={record.missing}
+    >
       {children}
-    </Button>
+    </Component>
   )
 }
 
@@ -96,12 +102,14 @@ const AlbumActions = ({
       <div className={classes.toolbar}>
         <div>
           <AlbumButton
+            featured="play"
             onClick={handlePlay}
             label={translate('resources.album.actions.playAll')}
           >
             <PlayArrowIcon />
           </AlbumButton>
           <AlbumButton
+            featured="shuffle"
             onClick={handleShuffle}
             label={translate('resources.album.actions.shuffle')}
           >

@@ -1,11 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useGetOne } from 'react-admin'
+import { useGetOne, useTranslate } from 'react-admin'
 import { GlobalHotKeys } from 'react-hotkeys'
 import IconButton from '@material-ui/core/IconButton'
-import { useMediaQuery } from '@material-ui/core'
+import { useMediaQuery, Menu, MenuItem } from '@material-ui/core'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { RiSaveLine } from 'react-icons/ri'
-import { LoveButton, useToggleLove } from '../common'
+import { LoveButton, QualityInfo, useToggleLove } from '../common'
+import { useStudioLabels } from '../studio/useStudioLabels'
+import { decisionService } from '../transcode'
 import { openSaveQueueDialog } from '../actions'
 import { keyMap } from '../hotkeys'
 import { makeStyles } from '@material-ui/core/styles'
@@ -53,14 +56,27 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  compact: { display: 'flex', flexShrink: 0 },
+  favorite: { '@media (max-width:1100px)': { display: 'none' } },
+  quality: { padding: '8px 16px' },
 }))
 
-const PlayerToolbar = ({ id, isRadio }) => {
+const PlayerToolbar = ({
+  id,
+  isRadio,
+  compact,
+  onLyrics,
+  onClear,
+  gainInfo,
+}) => {
   const dispatch = useDispatch()
   const { data, loading } = useGetOne('song', id, { enabled: !!id && !isRadio })
   const [toggleLove, toggling] = useToggleLove('song', data)
   const isDesktop = useMediaQuery('(min-width:810px)')
   const classes = useStyles()
+  const labels = useStudioLabels()
+  const translate = useTranslate()
+  const [anchor, setAnchor] = useState(null)
 
   const handlers = {
     TOGGLE_LOVE: useCallback(() => toggleLove(), [toggleLove]),
@@ -98,6 +114,55 @@ const PlayerToolbar = ({ id, isRadio }) => {
       className={buttonClass}
     />
   )
+
+  if (compact) {
+    const decision = decisionService.getCachedDecision(id)
+    const closeAndRun = (action) => (event) => {
+      setAnchor(null)
+      action(event)
+    }
+    return (
+      <div className={classes.compact}>
+        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges />
+        <div className={classes.favorite}>{loveButton}</div>
+        <IconButton
+          aria-label={labels.playerOptions}
+          aria-haspopup="menu"
+          aria-expanded={!!anchor}
+          onClick={(event) => setAnchor(event.currentTarget)}
+        >
+          <MoreHorizIcon fontSize="small" />
+        </IconButton>
+        <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>
+          <MenuItem
+            onClick={closeAndRun(toggleLove)}
+            disabled={loading || toggling || !id || isRadio}
+          >
+            {data?.starred ? labels.removeFavorite : labels.addFavorite}
+          </MenuItem>
+          <MenuItem onClick={closeAndRun(handleSaveQueue)} disabled={isRadio}>
+            {labels.saveQueue}
+          </MenuItem>
+          <MenuItem onClick={closeAndRun(onLyrics)}>
+            {translate('player.toggleLyricText')}
+          </MenuItem>
+          <MenuItem onClick={closeAndRun(onClear)}>
+            {translate('player.destroyText')}
+          </MenuItem>
+          {data && (
+            <div className={classes.quality}>
+              <QualityInfo
+                record={data}
+                {...gainInfo}
+                transcodeStream={decision?.transcodeStream}
+                isDirectPlay={decision?.canDirectPlay}
+              />
+            </div>
+          )}
+        </Menu>
+      </div>
+    )
+  }
 
   return (
     <>

@@ -61,6 +61,7 @@ const useStyles = makeStyles(
       position: 'relative',
     },
     artistDetail: {
+      backgroundColor: 'transparent',
       flex: '1',
       minWidth: 0,
       padding: '3%',

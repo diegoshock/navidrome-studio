@@ -30,6 +30,7 @@ import PropTypes from 'prop-types'
 import { formatBytes } from '../utils'
 import config from '../config'
 import { ToggleFieldsMenu } from '../common'
+import { PlaybackButton } from '../common/PlaybackButton'
 
 const useStyles = makeStyles({
   toolbar: {
@@ -121,18 +122,19 @@ const PlaylistActions = ({ className, ids, data, record, ...rest }) => {
     <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
       <div className={classes.toolbar}>
         <div>
-          <Button
+          <PlaybackButton
             onClick={handlePlay}
             label={translate('resources.album.actions.playAll')}
           >
             <PlayArrowIcon />
-          </Button>
-          <Button
+          </PlaybackButton>
+          <PlaybackButton
+            secondary
             onClick={handleShuffle}
             label={translate('resources.album.actions.shuffle')}
           >
             <ShuffleIcon />
-          </Button>
+          </PlaybackButton>
           <Button
             onClick={handlePlayNext}
             label={translate('resources.album.actions.playNext')}

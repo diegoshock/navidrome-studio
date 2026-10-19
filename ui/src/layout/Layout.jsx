@@ -13,7 +13,14 @@ import useCurrentTheme from '../themes/useCurrentTheme'
 import { useSearchRefocus } from '../common'
 
 const useStyles = makeStyles({
-  root: { paddingBottom: (props) => (props.addPadding ? '88px' : 0) },
+  root: {
+    paddingBottom: ({ addPadding }) =>
+      addPadding ? 'calc(104px + env(safe-area-inset-bottom, 0px))' : 0,
+    '@media (max-width:809px)': {
+      paddingBottom: ({ addPadding }) =>
+        addPadding ? 'calc(160px + env(safe-area-inset-bottom, 0px))' : 0,
+    },
+  },
   appFrame: { marginTop: '0 !important' },
   heading: {
     fontSize: 36,

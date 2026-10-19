@@ -20,6 +20,8 @@ import {
   Title,
 } from '../common/index.js'
 import ArtistActions from './ArtistActions'
+import { StudioBackdrop } from '../studio/StudioBackdrop'
+import { useBackdropLayout } from '../studio/useBackdropLayout'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(
@@ -54,6 +56,7 @@ const useStyles = makeStyles(
 )
 
 export const ArtistDetails = (props) => {
+  const backdrop = useBackdropLayout()
   const record = useRecordContext(props)
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('sm'), {
     noSsr: true,
@@ -81,7 +84,14 @@ export const ArtistDetails = (props) => {
 
   const Component = isDesktop ? DesktopArtistDetails : MobileArtistDetails
   return (
-    <Component artistInfo={artistInfo} record={record} biography={biography} />
+    <div className={backdrop.root}>
+      <StudioBackdrop record={record} />
+      <Component
+        artistInfo={artistInfo}
+        record={record}
+        biography={biography}
+      />
+    </div>
   )
 }
 

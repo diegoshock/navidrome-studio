@@ -27,6 +27,7 @@ import {
   syncQueue,
 } from '../actions'
 import PlayerToolbar from './PlayerToolbar'
+import StudioPlayerBar from './StudioPlayerBar'
 import { sendNotification } from '../utils'
 import subsonic from '../subsonic'
 import locale from './locale'
@@ -48,6 +49,8 @@ const Player = () => {
   const currentTrackIdRef = useRef(null)
   const stoppedRef = useRef(false)
   const [audioInstance, setAudioInstance] = useState(null)
+  const engine = useRef(null)
+  const [queueOpen, setQueueOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width:810px)')
   const isMobilePlayer =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -215,7 +218,8 @@ const Player = () => {
       showDownload: false,
       showLyric: true,
       showReload: false,
-      toggleMode: !isDesktop,
+      toggleMode: !config.studioInterface && !isDesktop,
+      responsive: !config.studioInterface,
       glassBg: false,
       showThemeSwitch: false,
       showMediaSession: true,
@@ -250,7 +254,7 @@ const Player = () => {
         playerState.autoPlay !== false &&
         (playerState.clear || playerState.playIndex === 0),
       clearPriorAudioLists: playerState.clear,
-      extendsContent: (
+      extendsContent: !config.studioInterface && (
         <PlayerToolbar id={current.trackId} isRadio={current.isRadio} />
       ),
       defaultVolume: isMobilePlayer ? 1 : playerState.volume,
@@ -456,9 +460,11 @@ const Player = () => {
   return (
     <ThemeProvider theme={createMuiTheme(theme)}>
       <ReactJkMusicPlayer
+        ref={engine}
         {...options}
-        className={classes.player}
+        className={`${classes.player} ${config.studioInterface ? classes.studioEngine : ''}`}
         onAudioListsChange={onAudioListsChange}
+        onAudioListsPanelChange={setQueueOpen}
         onAudioVolumeChange={onAudioVolumeChange}
         onAudioProgress={onAudioProgress}
         onAudioPlay={onAudioPlay}
@@ -471,6 +477,15 @@ const Player = () => {
         onBeforeDestroy={onBeforeDestroy}
         getAudioInstance={setAudioInstance}
       />
+      {config.studioInterface && visible && (
+        <StudioPlayerBar
+          audio={audioInstance}
+          engine={engine}
+          playerState={playerState}
+          gainInfo={gainInfo}
+          queueOpen={queueOpen}
+        />
+      )}
       <GlobalHotKeys handlers={handlers} keyMap={keyMap} allowChanges />
     </ThemeProvider>
   )

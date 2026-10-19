@@ -10,11 +10,16 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: ({ open }) => (open ? 240 : 64),
     top: 0,
-    bottom: ({ playing }) => (playing ? 80 : 0),
+    bottom: ({ playing }) =>
+      playing ? 'calc(96px + env(safe-area-inset-bottom, 0px))' : 0,
+    '@media (max-width:809px)': {
+      bottom: ({ playing }) =>
+        playing ? 'calc(152px + env(safe-area-inset-bottom, 0px))' : 0,
+    },
     height: 'auto',
     background: theme.palette.background.default,
     borderRight: `1px solid ${theme.palette.divider}`,
-    overflowX: 'hidden',
+    overflow: 'hidden',
   },
   backdrop: { zIndex: theme.zIndex.drawer - 1 },
 }))

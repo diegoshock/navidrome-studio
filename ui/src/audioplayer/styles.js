@@ -2,6 +2,39 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyle = makeStyles(
   (theme) => ({
+    studioEngine: {
+      '& > .music-player-panel, & > .react-jinke-music-player-mobile, & > .react-jinke-music-player':
+        { display: 'none' },
+      '& .audio-lists-panel': {
+        '&.hide': { display: 'none' },
+        '&.show': { display: 'block' },
+        zIndex: theme.zIndex.drawer + 2,
+        bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))',
+        maxHeight: 'calc(100dvh - 120px)',
+        '@media (max-width:809px)': {
+          bottom: 'calc(152px + env(safe-area-inset-bottom, 0px))',
+          maxHeight: 'calc(100dvh - 176px)',
+        },
+      },
+      '& .music-player-lyric': { zIndex: theme.zIndex.drawer + 2 },
+    },
+    compactTitle: {
+      display: 'block',
+      fontSize: 14,
+      lineHeight: '20px',
+      letterSpacing: '-0.01em',
+      '& > span': {
+        display: 'block',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
+      '& .songArtist': {
+        color: theme.palette.text.secondary,
+        fontSize: 12,
+        fontWeight: 400,
+      },
+    },
     audioTitle: {
       textDecoration: 'none',
       color: theme.palette.primary.dark,
