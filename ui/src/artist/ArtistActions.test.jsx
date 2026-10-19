@@ -68,6 +68,7 @@ describe('ArtistActions', () => {
     vi.clearAllMocks()
     // Mock console.error to suppress error logging in tests
     vi.spyOn(console, 'error').mockImplementation(() => {})
+    mockConfig.studioInterface = false
     mockConfig.enableSharing = true
     mockConfig.enableDownloads = true
     mockPermissions.value = 'admin'
@@ -258,6 +259,13 @@ describe('ArtistActions', () => {
       expect(mockDispatch).toHaveBeenCalledWith(
         openShareMenu(['ar1'], 'artist', 'Artist'),
       )
+    })
+
+    it('hides share entry points in Studio even when the server supports sharing', () => {
+      mockConfig.studioInterface = true
+      renderArtistActions()
+      expect(screen.queryByText('ra.action.share')).not.toBeInTheDocument()
+      expect(screen.getByText(/ra.action.download/)).toBeInTheDocument()
     })
 
     it('hides the share button when sharing is disabled', () => {

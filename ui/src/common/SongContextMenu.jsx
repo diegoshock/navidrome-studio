@@ -35,6 +35,7 @@ const useStyles = makeStyles({
 })
 
 const MoreButton = ({ record, onClick, info }) => {
+  const translate = useTranslate()
   const handleClick = record.missing
     ? (e) => {
         info.action(record)
@@ -42,7 +43,11 @@ const MoreButton = ({ record, onClick, info }) => {
       }
     : onClick
   return (
-    <IconButton onClick={handleClick} size={'small'}>
+    <IconButton
+      onClick={handleClick}
+      size={'small'}
+      aria-label={`${translate('ra.action.open_menu')}: ${record.title}`}
+    >
       {record?.missing ? (
         <MdQuestionMark fontSize={'large'} />
       ) : (
@@ -126,7 +131,7 @@ export const SongContextMenu = ({
       },
     },
     share: {
-      enabled: config.enableSharing,
+      enabled: config.enableSharing && !config.studioInterface,
       label: translate('ra.action.share'),
       action: (record) =>
         dispatch(

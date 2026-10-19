@@ -32,7 +32,13 @@ import config from '../config'
 import { ToggleFieldsMenu } from '../common'
 
 const useStyles = makeStyles({
-  toolbar: { display: 'flex', justifyContent: 'space-between', width: '100%' },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    gap: 8,
+    width: '100%',
+  },
 })
 
 const PlaylistActions = ({ className, ids, data, record, ...rest }) => {
@@ -139,7 +145,7 @@ const PlaylistActions = ({ className, ids, data, record, ...rest }) => {
           >
             <RiPlayListAddFill />
           </Button>
-          {config.enableSharing && (
+          {config.enableSharing && !config.studioInterface && (
             <Button onClick={handleShare} label={translate('ra.action.share')}>
               <ShareIcon />
             </Button>

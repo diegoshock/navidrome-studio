@@ -1,6 +1,5 @@
-import React, { createElement, forwardRef, Fragment } from 'react'
+import React, { createElement, forwardRef } from 'react'
 import {
-  AppBar as RAAppBar,
   MenuItemLink,
   useTranslate,
   usePermissions,
@@ -18,8 +17,7 @@ import ViewListIcon from '@material-ui/icons/ViewList'
 import { Dialogs } from '../dialogs/Dialogs'
 import { AboutDialog, QuickConnectDialog } from '../dialogs'
 import PersonalMenu from './PersonalMenu'
-import ActivityPanel from './ActivityPanel'
-import NowPlayingPanel from './NowPlayingPanel'
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
 import UserMenu from './UserMenu'
 import config from '../config'
 
@@ -73,7 +71,7 @@ const settingsResources = (resource) =>
   resource.options &&
   resource.options.subMenu === 'settings'
 
-const CustomUserMenu = ({ onClick, ...rest }) => {
+export const SettingsMenu = ({ onClick, ...rest }) => {
   const translate = useTranslate()
   const resources = useSelector(getResources)
   const classes = useStyles(rest)
@@ -91,12 +89,12 @@ const CustomUserMenu = ({ onClick, ...rest }) => {
       if (!config.enableUserEditing) {
         return null
       }
-      userResource.icon = MdPerson
-    } else {
-      userResource.icon = MdSupervisorAccount
     }
     return renderSettingsMenuItemLink(
-      userResource,
+      {
+        ...userResource,
+        icon: permissions === 'admin' ? MdSupervisorAccount : MdPerson,
+      },
       permissions !== 'admin' ? localStorage.getItem('userId') : null,
     )
   }
@@ -126,11 +124,7 @@ const CustomUserMenu = ({ onClick, ...rest }) => {
 
   return (
     <>
-      {config.devActivityPanel &&
-        permissions === 'admin' &&
-        config.enableNowPlaying && <NowPlayingPanel />}
-      {config.devActivityPanel && permissions === 'admin' && <ActivityPanel />}
-      <UserMenu {...rest}>
+      <UserMenu {...rest} icon={<SettingsOutlinedIcon />} showAvatar={false}>
         <PersonalMenu sidebarIsOpen={true} onClick={onClick} />
         {config.enableQuickConnect && (
           <DialogMenuItem
@@ -151,13 +145,11 @@ const CustomUserMenu = ({ onClick, ...rest }) => {
           dialog={AboutDialog}
         />
       </UserMenu>
-      <Dialogs />
     </>
   )
 }
 
-const AppBar = (props) => (
-  <RAAppBar {...props} container={Fragment} userMenu={<CustomUserMenu />} />
-)
+// Keep global dialogs mounted independently of sidebar state. No top navigation.
+const AppBar = () => <Dialogs />
 
 export default AppBar

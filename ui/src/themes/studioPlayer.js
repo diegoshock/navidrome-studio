@@ -13,17 +13,16 @@ export const studioPlayerStyles = ({
 .react-jinke-music-player .music-player-controller .music-player-controller-setting { background: ${accent}55; }
 .react-jinke-music-player .audio-circle-process-bar circle[class=stroke] { stroke: ${accent}; }
 .react-jinke-music-player-main .music-player-panel {
-  background: ${background}f5;
+  background: ${surface};
   color: ${foreground};
   border-top: 1px solid ${border};
-  box-shadow: 0 -6px 30px #00000008;
-  backdrop-filter: blur(24px);
+  box-shadow: none;
 }
 .react-jinke-music-player-main .music-player-panel svg { color: ${foreground}; }
 .react-jinke-music-player-main .react-jinke-music-player-mobile svg { color: ${foreground}; }
 .react-jinke-music-player-main .react-jinke-music-player-mobile .play-btn svg,
 .react-jinke-music-player-main .react-jinke-music-player-mobile-header-right svg { color: ${accent}; }
-.react-jinke-music-player-main .react-jinke-music-player-mobile-play-model-tip { background-color: ${accent}; }
+.react-jinke-music-player-main .react-jinke-music-player-mobile-play-model-tip { background-color: ${surface}; color: ${foreground}; }
 .react-jinke-music-player-main .music-player-panel button:disabled svg { opacity: .35; }
 .react-jinke-music-player-main .music-player-panel .panel-content .img-rotate,
 .react-jinke-music-player-mobile-cover,

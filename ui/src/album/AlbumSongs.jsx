@@ -68,7 +68,7 @@ const useStyles = makeStyles(
       justifyContent: 'flex-start',
     },
     row: {
-      '&:hover': {
+      '&:hover, &:focus-within': {
         '& $contextMenu': {
           visibility: 'visible',
         },
@@ -151,6 +151,8 @@ const AlbumSongs = (props) => {
     columns: toggleableFields,
     omittedColumns: ['title'],
     defaultOff: [
+      'quality',
+      'rating',
       'composer',
       'channels',
       'bpm',

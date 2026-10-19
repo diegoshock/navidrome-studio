@@ -8,6 +8,7 @@ import { AddToPlaylistButton } from './AddToPlaylistButton'
 import { makeStyles } from '@material-ui/core/styles'
 import { BatchShareButton } from './BatchShareButton'
 import config from '../config'
+import { SelectSongPageButton } from './SelectSongPageButton'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -44,10 +45,11 @@ export const SongBulkActions = (props) => {
         icon={<RiPlayListAddFill />}
         className={classes.button}
       />
-      {config.enableSharing && (
+      {config.enableSharing && !config.studioInterface && (
         <BatchShareButton {...props} className={classes.button} />
       )}
       <AddToPlaylistButton {...props} className={classes.button} />
+      <SelectSongPageButton />
     </Fragment>
   )
 }

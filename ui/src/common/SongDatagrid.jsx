@@ -11,6 +11,7 @@ import {
   PureDatagridBody,
   PureDatagridRow,
   useTranslate,
+  useListContext,
 } from 'react-admin'
 import {
   TableCell,
@@ -30,6 +31,9 @@ import subsonic from '../subsonic'
 import { AlbumContextMenu } from '../common'
 import { DraggableTypes } from '../consts'
 import { formatFullDate } from '../utils'
+import { SongSelectionHint } from './SongSelectionHint'
+import { useSongSelection } from './useSongSelection'
+import { useStudioLabels } from '../studio/useStudioLabels'
 
 const useStyles = makeStyles({
   subtitle: {
@@ -54,6 +58,17 @@ const useStyles = makeStyles({
   },
   row: {
     cursor: 'pointer',
+    userSelect: 'none',
+    WebkitTouchCallout: 'none',
+    WebkitTapHighlightColor: 'transparent',
+    touchAction: 'pan-y',
+    '&[aria-selected="true"]': {
+      backgroundColor: '#262629',
+      boxShadow: 'inset 2px 0 #c9c9ce',
+    },
+    '&[aria-selected="true"]:hover': { backgroundColor: '#303034' },
+    '&:focus-visible': { outline: '2px solid #d4d4d8', outlineOffset: -2 },
+    '&:focus-within $contextMenu': { visibility: 'visible' },
     '&:hover': {
       '& $contextMenu': {
         visibility: 'visible',
@@ -65,12 +80,18 @@ const useStyles = makeStyles({
     opacity: 0.3,
   },
   headerStyle: {
-    '& thead': {
-      boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.15)',
+    width: '100%',
+    overflowX: 'auto',
+    '@media (max-width:599px)': {
+      tableLayout: 'fixed',
+      '& th:last-child, & td:last-child': { width: 64 },
+      '& th:nth-last-child(2), & td:nth-last-child(2)': { width: 60 },
+      '& th': { fontSize: 10, paddingLeft: 3, paddingRight: 3 },
+      '& td': { paddingLeft: 4, paddingRight: 4 },
     },
     '& th': {
       fontWeight: 'bold',
-      padding: '15px',
+      padding: '12px 8px',
     },
   },
   contextMenu: {
@@ -187,13 +208,27 @@ DiscSubtitleRow.displayName = 'DiscSubtitleRow'
 export const SongDatagridRow = ({
   record,
   children,
-  firstTracksOfDiscs,
+  firstTracksOfDiscs = new Set(),
+  selectionAllowed = true,
   contextAlwaysVisible,
   onClickSubset,
   className,
   ...rest
 }) => {
   const classes = useStyles()
+  const { selectedIds = [], onToggleItem, onUnselectItems } = useListContext()
+  const active = selectedIds.length > 0
+  const selected = selectedIds.includes(record?.id)
+  const labels = useStudioLabels()
+  const selection = useSongSelection({
+    id: record?.id,
+    disabled: !selectionAllowed || !record || record.missing,
+    active,
+    selected,
+    onToggle: onToggleItem,
+    onCancel: onUnselectItems,
+    onPlay: () => rest.rowClick?.(record.id, rest.basePath, record),
+  })
   const fields = React.Children.toArray(children).filter((c) =>
     isValidElement(c),
   )
@@ -217,10 +252,11 @@ export const SongDatagridRow = ({
   const [, dragSongRef] = useDrag(
     () => ({
       type: DraggableTypes.SONG,
+      canDrag: !active && !record?.missing,
       item: { ids: [record?.mediaFileId || record?.id] },
       options: { dropEffect: 'copy' },
     }),
-    [record],
+    [record, active],
   )
 
   if (!record || !record.title) {
@@ -241,7 +277,7 @@ export const SongDatagridRow = ({
         <DiscSubtitleRow
           ref={dragDiscRef}
           record={record}
-          onClick={onClickSubset}
+          onClick={active ? () => {} : onClickSubset}
           contextAlwaysVisible={contextAlwaysVisible}
           colSpan={childCount + (rest.expand ? 1 : 0)}
         />
@@ -251,6 +287,13 @@ export const SongDatagridRow = ({
         record={record}
         {...rest}
         rowClick={rowClick}
+        {...selection}
+        hasBulkActions={false}
+        tabIndex={record.missing ? -1 : 0}
+        aria-selected={selected}
+        aria-label={record.title}
+        aria-description={selectionAllowed ? labels.selectionHint : undefined}
+        data-song-id={record.id}
         className={computedClasses}
       >
         {fields}
@@ -274,6 +317,7 @@ SongDatagridRow.defaultProps = {
 const SongDatagridBody = ({
   contextAlwaysVisible,
   showDiscSubtitles,
+  selectionAllowed,
   ...rest
 }) => {
   const dispatch = useDispatch()
@@ -326,6 +370,7 @@ const SongDatagridBody = ({
       {...rest}
       row={
         <SongDatagridRow
+          selectionAllowed={selectionAllowed}
           firstTracksOfDiscs={firstTracksOfDiscs}
           contextAlwaysVisible={contextAlwaysVisible}
           onClickSubset={playSubset}
@@ -338,21 +383,27 @@ const SongDatagridBody = ({
 export const SongDatagrid = ({
   contextAlwaysVisible,
   showDiscSubtitles,
+  hasBulkActions = true,
   ...rest
 }) => {
   const classes = useStyles()
   return (
-    <Datagrid
-      className={classes.headerStyle}
-      isRowSelectable={(r) => !r?.missing}
-      {...rest}
-      body={
-        <SongDatagridBody
-          contextAlwaysVisible={contextAlwaysVisible}
-          showDiscSubtitles={showDiscSubtitles}
-        />
-      }
-    />
+    <>
+      {hasBulkActions && <SongSelectionHint />}
+      <Datagrid
+        className={classes.headerStyle}
+        isRowSelectable={(r) => !r?.missing}
+        {...rest}
+        hasBulkActions={false}
+        body={
+          <SongDatagridBody
+            selectionAllowed={hasBulkActions}
+            contextAlwaysVisible={contextAlwaysVisible}
+            showDiscSubtitles={showDiscSubtitles}
+          />
+        }
+      />
+    </>
   )
 }
 

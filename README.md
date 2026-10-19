@@ -1,18 +1,22 @@
 # Navidrome Studio
 
-Versión no oficial de **Navidrome 0.64.2** con una interfaz inspirada en Apple Music: superficies claras, acento rosado, carátulas grandes, navegación sencilla y reproductor discreto. Incluye **Studio** y **Studio Dark**, accesos a novedades, álbumes, favoritos y descubrimiento aleatorio, y diseño adaptable a móvil.
+Versión no oficial de **Navidrome 0.64.2** con una interfaz oscura y minimalista, inspirada visualmente en Tidal. Canciones es la vista inicial: portadas, títulos y artistas sobre fondo negro, con dorado reservado para textos seleccionados.
 
-![Studio claro con biblioteca ficticia](docs/studio/screenshots/studio-light.png)
+La navegación vive en el lateral: **Canciones → Artistas → Álbumes → Playlists**. El engranaje inferior conserva los ajustes personales, administración y cuenta; actualizar, actividad y reproducción actual también están en el lateral. No hay barra superior ni accesos a Radios o Shares. Las playlists, búsqueda, favoritos, cola, descargas y controles del reproductor siguen disponibles.
 
-[Ver apariencia oscura](docs/studio/screenshots/studio-dark.png) · [Ver móvil](docs/studio/screenshots/studio-mobile.png)
+Mantén pulsada una canción durante medio segundo para seleccionarla y toca otras para añadirlas a la selección. Las acciones y el contador aparecen durante la selección; **×** la cancela. Con teclado, **Espacio** selecciona, **Enter** reproduce o alterna la selección y **Esc** cancela. Desplazar o arrastrar cancela la pulsación prolongada. El modo de selección conserva las acciones permitidas por cada lista y sus permisos.
+
+![Biblioteca de canciones de Studio](docs/studio/screenshots/studio-songs.png)
+
+[Ver móvil](docs/studio/screenshots/studio-mobile.png) · [Ver selección táctil](docs/studio/screenshots/studio-selection.png)
 
 Las capturas muestran una biblioteca sintética de prueba. Studio conserva el servidor, autenticación, escáner, reproducción y API Subsonic/OpenSubsonic de Navidrome. No incorpora el clasificador de géneros de Playlistr: Playlistr sigue siendo una aplicación independiente que se puede conectar a este servidor.
 
 ## Estado y publicación en GHCR
 
-La primera imagen **linux/amd64** ya está publicada en GHCR. Se verificó su descarga anónima con Docker y su ejecución como `0.64.2-studio.1`. Puedes usarla directamente en Unraid. Consulta [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml) para el estado de las siguientes actualizaciones.
+El paquete **linux/amd64** es público y se descarga sin credenciales. El rediseño corresponde a **0.64.2-studio.2**; cada publicación está disponible cuando termina correctamente [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml). En Unraid, usa **Check for Updates → Update** para descargar la nueva imagen y recarga la interfaz. No necesitas volver a crear el contenedor ni usar Docker Compose.
 
-Cada push a `main` activa el workflow **Test and publish Navidrome Studio** prueba el frontend y publica:
+Cada push a `main` activa el workflow **Test and publish Navidrome Studio**, que prueba el frontend y publica:
 
 ```text
 ghcr.io/diegoshock/navidrome-studio:latest
@@ -51,9 +55,9 @@ Prueba Studio en paralelo, con datos nuevos. No apuntes dos servidores activos a
    Mantén **Privileged** desactivado. Adapta UID/GID si tu servidor usa otros permisos. Si el puerto host `4534` está ocupado, cambia únicamente el puerto **host**.
 
 3. Pulsa **Apply** y abre `http://IP-DE-UNRAID:4534`. Crea el administrador de esta nueva instancia y espera el escaneo.
-4. Si aparece el tema anterior, entra en **Ajustes → Personal → Tema → Studio**. El botón de sol/luna de la biblioteca alterna entre Studio y Studio Dark.
+4. Si aparece el tema anterior, entra en **Ajustes → Personal → Tema → Studio**. Studio y Studio Dark usan ahora la misma apariencia oscura. Las preferencias explícitas de otros temas se conservan.
 
-La [plantilla XML](unraid/navidrome-studio.xml) contiene estos campos. Guárdala como `/boot/config/plugins/dockerMan/templates-user/my-navidrome-studio.xml` y selecciónala en **Add Container**. No requiere instalar Docker Compose ni está publicada en Community Applications.
+La [plantilla XML directa](https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/unraid/navidrome-studio.xml) contiene estos campos. Guárdala como `/boot/config/plugins/dockerMan/templates-user/my-navidrome-studio.xml` y selecciónala en **Add Container**. No requiere instalar Docker Compose ni está publicada en Community Applications.
 
 Tus usuarios, favoritos y playlists actuales no aparecen automáticamente en esta instalación de prueba. Esta versión de Studio usa la misma base que **Navidrome 0.64.2**. Para una migración posterior, detén el original y respalda sus datos completos antes de copiar o cambiar su carpeta de datos. Evita abrir una base de datos de una versión más reciente con una versión anterior. Para volver al original durante la prueba, basta con detener Studio y usar el servidor que ya tenías.
 
@@ -86,11 +90,11 @@ npm run build
 
 El frontend de desarrollo usa el puerto 4533 y espera el backend en 4633. Para iniciarlo con un backend de prueba ya configurado, ejecuta `npm start`. Usa datos aislados durante el desarrollo. Los resultados de las pruebas están en [VALIDATION.md](docs/studio/VALIDATION.md).
 
-Las modificaciones de interfaz están en `ui/src/studio/`, `ui/src/themes/studio*.js`, el registro de temas y las vistas de biblioteca. Se mantienen los servicios y API de Navidrome sin cambios de código Go.
+Las modificaciones principales están en `ui/src/layout/` (navegación), `ui/src/common/SongDatagrid.jsx` y `useSongSelection.js` (interacción), las vistas de canciones/álbumes/artistas/playlists, `ui/src/studio/` y `ui/src/themes/studio*.js` (presentación). Se mantienen los servicios y API de Navidrome sin cambios de código Go.
 
 ## Licencia y mantenimiento
 
-Navidrome y esta modificación se distribuyen bajo **GPLv3**; consulta [LICENSE](LICENSE). Studio es independiente de los proyectos Navidrome y Apple y no utiliza logotipos ni recursos gráficos de Apple. La imagen incluye el código correspondiente en `/usr/share/navidrome-studio/source.tar.gz`:
+Navidrome y esta modificación se distribuyen bajo **GPLv3**; consulta [LICENSE](LICENSE). Studio es independiente de Navidrome y Tidal y no utiliza la marca ni recursos gráficos de Tidal. La imagen incluye el código correspondiente en `/usr/share/navidrome-studio/source.tar.gz`:
 
 ```bash
 docker cp navidrome-studio:/usr/share/navidrome-studio/source.tar.gz ./navidrome-studio-source.tar.gz

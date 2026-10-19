@@ -3,6 +3,8 @@
 // in the /server/app/serve_index.go
 const defaultConfig = {
   version: 'dev',
+  // Presentation only: sharing APIs and existing public links remain available.
+  studioInterface: true,
   firstTime: false,
   baseURL: '',
   variousArtistsId: '63sqASlAfjbGMuLP4JhnZU', // See consts.VariousArtistsID in consts.go

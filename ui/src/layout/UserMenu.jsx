@@ -54,7 +54,7 @@ const UserMenu = (props) => {
   const classes = useStyles(props)
   const dispatch = useDispatch()
 
-  const { children, label, icon, logout } = props
+  const { children, label, icon, logout, showAvatar = true } = props
 
   useEffect(() => {
     if (config.devActivityPanel) {
@@ -79,9 +79,10 @@ const UserMenu = (props) => {
           aria-label={label && translate(label, { _: label })}
           aria-owns={open ? 'menu-appbar' : null}
           aria-haspopup={true}
+          aria-expanded={open}
           onClick={handleMenu}
         >
-          {loaded && identity.avatar ? (
+          {showAvatar && loaded && identity.avatar ? (
             <Avatar
               className={classes.avatar}
               src={identity.avatar}
@@ -96,12 +97,12 @@ const UserMenu = (props) => {
         id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'right',
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         open={open}
         onClose={handleClose}

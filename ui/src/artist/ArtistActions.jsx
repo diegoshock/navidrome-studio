@@ -156,15 +156,17 @@ const ArtistActions = ({ className, record, ...rest }) => {
         loading={loadingAction === 'radio'}
         icon={<IoIosRadio className={classes.radioIcon} />}
       />
-      {config.enableSharing && hasAlbumArtistContent && (
-        <LoadingButton
-          onClick={handleShare}
-          label={translate('ra.action.share')}
-          className={classes.button}
-          size={isMobile ? 'small' : 'medium'}
-          icon={<ShareIcon />}
-        />
-      )}
+      {config.enableSharing &&
+        !config.studioInterface &&
+        hasAlbumArtistContent && (
+          <LoadingButton
+            onClick={handleShare}
+            label={translate('ra.action.share')}
+            className={classes.button}
+            size={isMobile ? 'small' : 'medium'}
+            icon={<ShareIcon />}
+          />
+        )}
       {config.enableDownloads && hasAlbumArtistContent && (
         <LoadingButton
           onClick={handleDownload}

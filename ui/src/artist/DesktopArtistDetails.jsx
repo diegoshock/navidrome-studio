@@ -17,11 +17,13 @@ const useStyles = makeStyles(
   (theme) => ({
     root: {
       display: 'flex',
-      padding: '1em',
+      padding: 0,
+      gap: 24,
     },
     details: {
       display: 'flex',
       flex: '1',
+      minWidth: 0,
       flexDirection: 'column',
     },
     biography: {
@@ -33,7 +35,9 @@ const useStyles = makeStyles(
       minHeight: '4.5em',
     },
     content: {
-      flex: '1 0 auto',
+      flex: '1 1 auto',
+      minWidth: 0,
+      padding: 0,
     },
     cover: {
       width: '12rem',
@@ -58,6 +62,7 @@ const useStyles = makeStyles(
     },
     artistDetail: {
       flex: '1',
+      minWidth: 0,
       padding: '3%',
       display: 'flex',
       minHeight: '10rem',
@@ -104,7 +109,7 @@ const DesktopArtistDetails = ({ artistInfo, record, biography }) => {
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography
-              component="h5"
+              component="h1"
               variant="h5"
               className={classes.artistName}
             >

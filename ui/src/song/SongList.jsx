@@ -21,7 +21,6 @@ import {
   SongDatagrid,
   SongInfo,
   SongTitleField,
-  SongSimpleList,
   RatingField,
   useResourceRefresh,
   ArtistLinkField,
@@ -46,7 +45,7 @@ const useStyles = makeStyles({
     verticalAlign: 'text-top',
   },
   row: {
-    '&:hover': {
+    '&:hover, &:focus-within': {
       '& $contextMenu': {
         visibility: 'visible',
       },
@@ -144,7 +143,7 @@ const SongList = (props) => {
   const toggleableFields = useMemo(() => {
     return {
       album: isDesktop && <AlbumLinkField source="album" sortByOrder={'ASC'} />,
-      artist: <ArtistLinkField source="artist" />,
+      artist: !isXsmall && <ArtistLinkField source="artist" />,
       composer: <ArtistLinkField source="composer" sortable={false} />,
       albumArtist: <ArtistLinkField source="albumArtist" />,
       trackNumber: isDesktop && (
@@ -189,12 +188,17 @@ const SongList = (props) => {
         <DateField source="createdAt" sortBy="recently_added" showTime />
       ),
     }
-  }, [isDesktop, classes.ratingField])
+  }, [isDesktop, isXsmall, classes.ratingField])
 
   const columns = useSelectedFields({
     resource: 'song',
     columns: toggleableFields,
     defaultOff: [
+      'trackNumber',
+      'playCount',
+      'year',
+      'quality',
+      'rating',
       'composer',
       'channels',
       'bpm',
@@ -214,6 +218,7 @@ const SongList = (props) => {
         {...props}
         sort={{ field: 'title', order: 'ASC' }}
         exporter={false}
+        empty={false}
         bulkActionButtons={<SongBulkActions />}
         actions={<SongListActions />}
         filters={<SongFilter />}
@@ -223,32 +228,33 @@ const SongList = (props) => {
           isXsmall ? 50 : 15,
         )}
       >
-        {isXsmall ? (
-          <SongSimpleList />
-        ) : (
-          <SongDatagrid
-            rowClick={handleRowClick}
-            contextAlwaysVisible={!isDesktop}
-            classes={{ row: classes.row }}
-          >
-            <SongTitleField source="title" showTrackNumbers={false} />
-            {columns}
-            <SongContextMenu
-              source={'starred_at'}
-              sortByOrder={'DESC'}
-              sortable={config.enableFavourites}
-              className={classes.contextMenu}
-              label={
-                config.enableFavourites && (
-                  <FavoriteBorderIcon
-                    fontSize={'small'}
-                    className={classes.contextHeader}
-                  />
-                )
-              }
-            />
-          </SongDatagrid>
-        )}
+        <SongDatagrid
+          rowClick={handleRowClick}
+          contextAlwaysVisible={!isDesktop}
+          classes={{ row: classes.row }}
+        >
+          <SongTitleField
+            source="title"
+            showArtwork
+            showArtist={isXsmall}
+            showTrackNumbers={false}
+          />
+          {isXsmall ? <DurationField source="duration" /> : columns}
+          <SongContextMenu
+            source={'starred_at'}
+            sortByOrder={'DESC'}
+            sortable={config.enableFavourites}
+            className={isDesktop ? classes.contextMenu : undefined}
+            label={
+              config.enableFavourites && (
+                <FavoriteBorderIcon
+                  fontSize={'small'}
+                  className={classes.contextHeader}
+                />
+              )
+            }
+          />
+        </SongDatagrid>
       </List>
       <ExpandInfoDialog content={<SongInfo />} />
     </>

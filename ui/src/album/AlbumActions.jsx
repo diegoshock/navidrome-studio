@@ -30,7 +30,13 @@ import config from '../config'
 import { RefreshMetadataButton, ToggleFieldsMenu } from '../common'
 
 const useStyles = makeStyles({
-  toolbar: { display: 'flex', justifyContent: 'space-between', width: '100%' },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    gap: 8,
+    width: '100%',
+  },
 })
 
 const AlbumButton = ({ children, ...rest }) => {
@@ -119,7 +125,7 @@ const AlbumActions = ({
           >
             <PlaylistAddIcon />
           </AlbumButton>
-          {config.enableSharing && (
+          {config.enableSharing && !config.studioInterface && (
             <AlbumButton
               onClick={handleShare}
               label={translate('ra.action.share')}

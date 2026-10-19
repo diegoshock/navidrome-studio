@@ -64,7 +64,7 @@ const useStyles = makeStyles(
       justifyContent: 'flex-start',
     },
     row: {
-      '&:hover': {
+      '&:hover, &:focus-within': {
         '& $contextMenu': {
           visibility: 'visible',
         },
@@ -147,7 +147,14 @@ const PlaylistSongs = ({ playlistId, readOnly, actions, ...props }) => {
   const toggleableFields = useMemo(() => {
     return {
       trackNumber: isDesktop && <TextField source="id" label={'#'} />,
-      title: <SongTitleField source="title" showTrackNumbers={false} />,
+      title: (
+        <SongTitleField
+          source="title"
+          showArtwork
+          showArtist={!isDesktop}
+          showTrackNumbers={false}
+        />
+      ),
       album: isDesktop && <AlbumLinkField source="album" />,
       artist: isDesktop && <ArtistLinkField source="artist" />,
       albumArtist: isDesktop && <ArtistLinkField source="albumArtist" />,
@@ -186,6 +193,7 @@ const PlaylistSongs = ({ playlistId, readOnly, actions, ...props }) => {
     resource: 'playlistTrack',
     columns: toggleableFields,
     defaultOff: [
+      'quality',
       'channels',
       'bpm',
       'year',
@@ -221,7 +229,10 @@ const PlaylistSongs = ({ playlistId, readOnly, actions, ...props }) => {
           <ReorderableList
             readOnly={readOnly}
             onDragEnd={handleDragEnd}
-            nodeSelector={'tr'}
+            nodeSelector={'tbody tr'}
+            handleSelector={
+              selectedIds.length ? '.selection-disables-reorder' : undefined
+            }
           >
             <SongDatagrid
               rowClick={(id) => dispatch(playTracks(data, ids, id))}

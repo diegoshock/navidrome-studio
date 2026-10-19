@@ -6,6 +6,7 @@ import {
 } from 'react-admin'
 import { MdOutlinePlaylistRemove } from 'react-icons/md'
 import PropTypes from 'prop-types'
+import { SelectSongPageButton } from '../common/SelectSongPageButton'
 
 // Replace original resource with "fake" one for removing tracks from playlist
 const PlaylistSongBulkActions = ({
@@ -23,6 +24,7 @@ const PlaylistSongBulkActions = ({
   return (
     <ResourceContextProvider value={mappedResource}>
       <Fragment>
+        <SelectSongPageButton />
         <BulkDeleteButton
           {...rest}
           label={'ra.action.remove'}

@@ -4,7 +4,7 @@ import { describe, it, beforeEach, vi } from 'vitest'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { activityReducer } from '../reducers'
-import AppBar from './AppBar'
+import AppBar, { SettingsMenu } from './AppBar'
 import config from '../config'
 
 let store
@@ -29,7 +29,7 @@ vi.mock('./UserMenu', () => ({
   default: ({ children }) => <div>{children}</div>,
 }))
 vi.mock('../dialogs/Dialogs', () => ({
-  Dialogs: () => <div />,
+  Dialogs: () => <div data-testid="global-dialogs" />,
 }))
 vi.mock('../dialogs', () => ({
   AboutDialog: () => <div />,
@@ -46,13 +46,14 @@ describe('<AppBar />', () => {
     })
   })
 
-  it('renders NowPlayingPanel when enabled', () => {
+  it('mounts global dialogs without a navigation bar', () => {
     render(
       <Provider store={store}>
         <AppBar />
       </Provider>,
     )
-    expect(screen.getByTestId('now-playing-panel')).toBeInTheDocument()
+    expect(screen.getByTestId('global-dialogs')).toBeInTheDocument()
+    expect(screen.queryByTestId('appbar')).toBeNull()
   })
 
   it('hides NowPlayingPanel when disabled', () => {
@@ -69,7 +70,7 @@ describe('<AppBar />', () => {
     config.enableQuickConnect = true
     render(
       <Provider store={store}>
-        <AppBar />
+        <SettingsMenu />
       </Provider>,
     )
     expect(screen.queryAllByText('menu.quickConnect.name')).not.toHaveLength(0)
@@ -78,7 +79,7 @@ describe('<AppBar />', () => {
   it('hides the Quick Connect menu item when disabled', () => {
     render(
       <Provider store={store}>
-        <AppBar />
+        <SettingsMenu />
       </Provider>,
     )
     expect(screen.queryAllByText('menu.quickConnect.name')).toHaveLength(0)

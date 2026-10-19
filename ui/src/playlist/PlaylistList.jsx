@@ -35,6 +35,23 @@ import PlaylistListActions from './PlaylistListActions'
 import ChangePublicStatusButton from './ChangePublicStatusButton'
 
 const useStyles = makeStyles((theme) => ({
+  grid: {
+    [theme.breakpoints.down('xs')]: {
+      tableLayout: 'fixed',
+      width: '100%',
+      '& th, & td': { padding: '10px 3px', overflow: 'hidden' },
+      '& th:first-child, & td:first-child': { width: 38 },
+      '& th:nth-child(3), & td:nth-child(3)': { width: 50 },
+      '& th:nth-child(n+4), & td:nth-child(n+4)': { width: 36 },
+      '& .column-name span': {
+        display: 'block',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
+      '& .MuiAvatar-root': { width: 32, height: 32 },
+    },
+  },
   button: {
     color: theme.palette.type === 'dark' ? 'white' : undefined,
   },
@@ -157,6 +174,7 @@ export const PlaylistLove = ({ record, className }) => (
 PlaylistLove.defaultProps = { source: 'starred', sortable: false }
 
 const PlaylistList = (props) => {
+  const classes = useStyles()
   const isXsmall = useMediaQuery((theme) => theme.breakpoints.down('xs'))
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'))
   useResourceRefresh('playlist')
@@ -196,7 +214,11 @@ const PlaylistList = (props) => {
       actions={<PlaylistListActions />}
       bulkActionButtons={!isXsmall && <PlaylistListBulkActions />}
     >
-      <Datagrid rowClick="show" isRowSelectable={(r) => isWritable(r?.ownerId)}>
+      <Datagrid
+        className={classes.grid}
+        rowClick="show"
+        isRowSelectable={(r) => isWritable(r?.ownerId)}
+      >
         <ArtworkAvatar source="id" variant="square" />
         <TextField source="name" />
         {columns}

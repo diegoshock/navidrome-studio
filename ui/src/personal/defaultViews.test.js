@@ -4,7 +4,7 @@ import {
   isResourceDefaultView,
   resourceDefaultViews,
 } from './defaultViews'
-import albumLists, { defaultAlbumList } from '../album/albumLists'
+import albumLists from '../album/albumLists'
 
 describe('defaultViews', () => {
   beforeEach(() => {
@@ -25,7 +25,6 @@ describe('defaultViews', () => {
         { id: 'artist', name: 'resources.artist.name:2' },
         { id: 'song', name: 'resources.song.name:2' },
         { id: 'playlist', name: 'resources.playlist.name:2' },
-        { id: 'radio', name: 'resources.radio.name:2' },
       ]),
     )
   })
@@ -34,12 +33,17 @@ describe('defaultViews', () => {
     expect(isResourceDefaultView('artist')).toBe(true)
     expect(isResourceDefaultView('song')).toBe(true)
     expect(isResourceDefaultView('playlist')).toBe(true)
-    expect(isResourceDefaultView('radio')).toBe(true)
+    expect(isResourceDefaultView('radio')).toBe(false)
     expect(isResourceDefaultView('recentlyAdded')).toBe(false)
   })
 
-  it('falls back to the default album list when no default view is stored', () => {
-    expect(getStoredDefaultView()).toBe(defaultAlbumList)
+  it('falls back to songs when no default view is stored', () => {
+    expect(getStoredDefaultView()).toBe('song')
+  })
+
+  it('replaces a legacy radio default with songs', () => {
+    localStorage.setItem('defaultView', 'radio')
+    expect(getStoredDefaultView()).toBe('song')
   })
 
   it('returns the stored default view', () => {

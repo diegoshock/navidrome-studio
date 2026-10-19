@@ -13,16 +13,14 @@ const useStyles = makeStyles(
   (theme) => ({
     root: {
       display: 'flex',
-      background: ({ img }) => `url(${img})`,
     },
     bgContainer: {
       display: 'flex',
-      height: '15rem',
-      width: '100vw',
+      minHeight: '9rem',
+      gap: 16,
+      width: '100%',
       padding: 'unset',
-      backdropFilter: 'blur(1px)',
       backgroundPosition: '50% 30%',
-      background: `linear-gradient(to bottom, rgba(52 52 52 / 72%), rgba(21 21 21))`,
     },
     link: {
       margin: '1px',
@@ -32,38 +30,37 @@ const useStyles = makeStyles(
       alignItems: 'flex-start',
       flexDirection: 'column',
       justifyContent: 'center',
-      marginLeft: '0.5rem',
+      minWidth: 0,
     },
     biography: {
       display: 'flex',
-      marginLeft: '3%',
-      marginRight: '3%',
-      marginTop: '-2em',
+      marginTop: 16,
+      width: '100%',
       zIndex: '1',
       '& p': {
         whiteSpace: ({ expanded }) => (expanded ? 'unset' : 'nowrap'),
         overflow: 'hidden',
-        width: '95vw',
+        width: '100%',
         textOverflow: 'ellipsis',
       },
     },
     cover: {
       width: 151,
-      boxShadow: '0px 0px 6px 0px #565656',
+      boxShadow: 'none',
       borderRadius: '5px',
       backgroundColor: 'transparent',
       transition: 'opacity 0.3s ease-in-out',
       objectFit: 'cover',
     },
     artistImage: {
-      marginLeft: '1em',
+      marginLeft: 0,
       maxHeight: '7rem',
       backgroundColor: 'inherit',
-      marginTop: '4rem',
+      marginTop: 0,
       width: '7rem',
       minWidth: '7rem',
       display: 'flex',
-      borderRadius: '5em',
+      borderRadius: 4,
       position: 'relative',
     },
     loveButton: {
@@ -106,7 +103,7 @@ const MobileArtistDetails = ({ biography, record }) => {
           </Card>
           <div className={classes.details}>
             <Typography
-              component="h5"
+              component="h1"
               variant="h5"
               className={classes.artistName}
             >

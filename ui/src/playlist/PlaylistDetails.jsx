@@ -20,23 +20,29 @@ const useStyles = makeStyles(
   (theme) => ({
     root: {
       [theme.breakpoints.down('xs')]: {
-        padding: '0.7em',
-        minWidth: '20em',
+        padding: 0,
+        minWidth: 0,
       },
       [theme.breakpoints.up('sm')]: {
-        padding: '1em',
-        minWidth: '32em',
+        padding: 0,
+        minWidth: 0,
       },
     },
     cardContents: {
       display: 'flex',
+      padding: 0,
+      gap: 24,
+      [theme.breakpoints.down('xs')]: { flexDirection: 'column', gap: 16 },
     },
     details: {
       display: 'flex',
       flexDirection: 'column',
     },
     content: {
-      flex: '2 0 auto',
+      flex: '1 1 auto',
+      minWidth: 0,
+      padding: 0,
+      '&:last-child': { paddingBottom: 0 },
     },
     coverParent: {
       [theme.breakpoints.down('xs')]: {
@@ -127,6 +133,7 @@ const PlaylistDetails = (props) => {
             <div className={classes.titleRow}>
               <OverflowTooltip title={record.name || ''}>
                 <Typography
+                  component="h1"
                   variant={isDesktop ? 'h5' : 'h6'}
                   className={classes.title}
                 >

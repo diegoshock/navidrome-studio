@@ -1,149 +1,176 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Divider, makeStyles } from '@material-ui/core'
-import clsx from 'clsx'
-import { useTranslate, MenuItemLink, getResources } from 'react-admin'
-import ViewListIcon from '@material-ui/icons/ViewList'
-import AlbumIcon from '@material-ui/icons/Album'
-import SubMenu from './SubMenu'
-import { humanize, pluralize } from 'inflection'
-import albumLists from '../album/albumLists'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Divider, IconButton, Tooltip, makeStyles } from '@material-ui/core'
+import {
+  useTranslate,
+  MenuItemLink,
+  getResources,
+  usePermissions,
+  useRefresh,
+  toggleSidebar,
+} from 'react-admin'
+import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined'
+import AlbumOutlinedIcon from '@material-ui/icons/AlbumOutlined'
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline'
+import QueueMusicIcon from '@material-ui/icons/QueueMusic'
+import MenuOpenIcon from '@material-ui/icons/MenuOpen'
+import MenuIcon from '@material-ui/icons/Menu'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import PlaylistsSubMenu from './PlaylistsSubMenu'
 import LibrarySelector from '../common/LibrarySelector'
 import config from '../config'
+import { useStudioLabels } from '../studio/useStudioLabels'
 import StudioBrand from '../studio/StudioBrand'
+import { SettingsMenu } from './AppBar'
+import ActivityPanel from './ActivityPanel'
+import NowPlayingPanel from './NowPlayingPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    paddingBottom: (props) => (props.addPadding ? '80px' : '20px'),
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '12px 0 8px',
   },
-  open: {
-    width: 240,
-  },
-  closed: {
-    width: 55,
-  },
+  brand: { display: 'flex', alignItems: 'center', padding: '0 8px 16px' },
+  scroll: { flex: 1, overflowY: 'auto', overflowX: 'hidden', minHeight: 0 },
+  primary: { paddingBottom: 20 },
   active: {
-    color: theme.palette.text.primary,
-    backgroundColor: theme.studio ? theme.palette.action.selected : undefined,
-    fontWeight: 'bold',
+    color: '#c7ac78',
+    background: theme.palette.action.selected,
+    fontWeight: 600,
+  },
+  item: {
+    margin: '3px 8px',
+    padding: '12px',
+    fontSize: ({ open }) => (open ? 14 : 0),
+    borderRadius: 5,
+    minWidth: 0,
+    '& .MuiListItemIcon-root': {
+      minWidth: 32,
+      color: theme.palette.text.secondary,
+    },
+    '& .MuiTypography-root': { fontSize: 14 },
+  },
+  footer: {
+    flexShrink: 0,
+    borderTop: `1px solid ${theme.palette.divider}`,
+    margin: '8px 8px 0',
+    paddingTop: 8,
+  },
+  tools: { display: 'flex', flexWrap: 'wrap', alignItems: 'center' },
+  settings: {
+    display: 'flex',
+    alignItems: 'center',
+    color: theme.palette.text.secondary,
+    fontSize: 13,
   },
 }))
 
-const translatedResourceName = (resource, translate) =>
-  translate(`resources.${resource.name}.name`, {
-    smart_count: 2,
-    _:
-      resource.options && resource.options.label
-        ? translate(resource.options.label, {
-            smart_count: 2,
-            _: resource.options.label,
-          })
-        : humanize(pluralize(resource.name)),
-  })
+const primaryNavigation = [
+  { name: 'song', icon: MusicNoteOutlinedIcon, to: '/song' },
+  { name: 'artist', icon: PeopleOutlineIcon, to: '/artist' },
+  { name: 'album', icon: AlbumOutlinedIcon, to: '/album/all' },
+  { name: 'playlist', icon: QueueMusicIcon, to: '/playlist' },
+]
 
-const Menu = ({ dense = false }) => {
+const Menu = ({ logout }) => {
   const open = useSelector((state) => state.admin.ui.sidebarOpen)
-  const translate = useTranslate()
-  const queue = useSelector((state) => state.player?.queue)
-  const classes = useStyles({ addPadding: queue.length > 0 })
   const resources = useSelector(getResources)
-
-  // TODO State is not persisted in mobile when you close the sidebar menu. Move to redux?
+  const translate = useTranslate()
+  const labels = useStudioLabels()
+  const dispatch = useDispatch()
+  const refresh = useRefresh()
+  const { permissions } = usePermissions()
+  const classes = useStyles({ open })
   const [state, setState] = useState({
-    menuAlbumList: true,
     menuPlaylists: true,
     menuSharedPlaylists: true,
   })
-
-  const handleToggle = (menu) => {
-    setState((state) => ({ ...state, [menu]: !state[menu] }))
-  }
-
-  const renderResourceMenuItemLink = (resource) => (
-    <MenuItemLink
-      key={resource.name}
-      to={`/${resource.name}`}
-      activeClassName={classes.active}
-      primaryText={translatedResourceName(resource, translate)}
-      leftIcon={resource.icon || <ViewListIcon />}
-      sidebarIsOpen={open}
-      dense={dense}
-    />
-  )
-
-  const renderAlbumMenuItemLink = (type, al) => {
-    const resource = resources.find((r) => r.name === 'album')
-    if (!resource) {
-      return null
-    }
-
-    const albumListAddress = `/album/${type}`
-
-    const name = translate(`resources.album.lists.${type || 'default'}`, {
-      _: translatedResourceName(resource, translate),
-    })
-
-    return (
-      <MenuItemLink
-        key={albumListAddress}
-        to={albumListAddress}
-        activeClassName={classes.active}
-        primaryText={name}
-        leftIcon={al.icon || <ViewListIcon />}
-        sidebarIsOpen={open}
-        dense={dense}
-        exact
-      />
-    )
-  }
-
-  const subItems = (subMenu) => (resource) =>
-    resource.hasList && resource.options && resource.options.subMenu === subMenu
-
   return (
-    <div
-      className={clsx(classes.root, {
-        [classes.open]: open,
-        [classes.closed]: !open,
-      })}
-    >
-      <StudioBrand open={open} />
-      {open && <LibrarySelector />}
-      <SubMenu
-        handleToggle={() => handleToggle('menuAlbumList')}
-        isOpen={state.menuAlbumList}
-        sidebarIsOpen={open}
-        name="menu.albumList"
-        icon={<AlbumIcon />}
-        dense={dense}
-      >
-        {Object.keys(albumLists).map((type) =>
-          renderAlbumMenuItemLink(type, albumLists[type]),
+    <div className={classes.root}>
+      <div className={classes.brand}>
+        <Tooltip
+          title={translate(
+            open ? 'ra.action.close_menu' : 'ra.action.open_menu',
+          )}
+        >
+          <IconButton
+            aria-label={translate(
+              open ? 'ra.action.close_menu' : 'ra.action.open_menu',
+            )}
+            aria-expanded={open}
+            onClick={() => dispatch(toggleSidebar())}
+          >
+            {open ? <MenuOpenIcon /> : <MenuIcon />}
+          </IconButton>
+        </Tooltip>
+        <StudioBrand open={open} />
+      </div>
+      <div className={classes.scroll}>
+        <nav aria-label={labels.navigation} className={classes.primary}>
+          {primaryNavigation
+            .filter(({ name }) => resources.some((r) => r.name === name))
+            .map(({ name, icon: Icon, to }) => (
+              <MenuItemLink
+                key={name}
+                to={to}
+                role="link"
+                aria-label={
+                  name === 'playlist'
+                    ? 'Playlists'
+                    : translate(`resources.${name}.name`, { smart_count: 2 })
+                }
+                isActive={(_, location) =>
+                  location.pathname.startsWith(`/${name}`)
+                }
+                primaryText={
+                  name === 'playlist'
+                    ? 'Playlists'
+                    : translate(`resources.${name}.name`, { smart_count: 2 })
+                }
+                leftIcon={<Icon />}
+                sidebarIsOpen={open}
+                className={classes.item}
+                activeClassName={classes.active}
+              />
+            ))}
+        </nav>
+        {open && <LibrarySelector />}
+        {config.devSidebarPlaylists && open && (
+          <>
+            <Divider />
+            <PlaylistsSubMenu
+              state={state}
+              setState={setState}
+              sidebarIsOpen={open}
+            />
+          </>
         )}
-      </SubMenu>
-      {resources.filter(subItems(undefined)).map(renderResourceMenuItemLink)}
-      {config.devSidebarPlaylists && open ? (
-        <>
-          <Divider />
-          <PlaylistsSubMenu
-            state={state}
-            setState={setState}
-            sidebarIsOpen={open}
-            dense={dense}
-          />
-        </>
-      ) : (
-        resources.filter(subItems('playlist')).map(renderResourceMenuItemLink)
-      )}
+      </div>
+      <div className={classes.footer}>
+        <div className={classes.tools}>
+          <Tooltip title={translate('ra.action.refresh')}>
+            <IconButton
+              aria-label={translate('ra.action.refresh')}
+              onClick={() => refresh()}
+            >
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
+          {config.devActivityPanel &&
+            permissions === 'admin' &&
+            config.enableNowPlaying && <NowPlayingPanel />}
+          {config.devActivityPanel && permissions === 'admin' && (
+            <ActivityPanel />
+          )}
+        </div>
+        <div className={classes.settings}>
+          <SettingsMenu logout={logout} />
+          {open && <span aria-hidden="true">{translate('menu.settings')}</span>}
+        </div>
+      </div>
     </div>
   )
 }
-
 export default Menu

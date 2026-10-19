@@ -115,7 +115,10 @@ const ContextMenu = ({
     },
     ...(!hideShare && {
       share: {
-        enabled: config.enableSharing && (!isArtist || downloadSize),
+        enabled:
+          config.enableSharing &&
+          !config.studioInterface &&
+          (!isArtist || downloadSize),
         needData: false,
         label: translate('ra.action.share'),
         action: (record) =>

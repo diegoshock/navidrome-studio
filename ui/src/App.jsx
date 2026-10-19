@@ -1,3 +1,4 @@
+import HomeRedirect from './layout/HomeRedirect'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { createHashHistory } from 'history'
@@ -18,8 +19,6 @@ import song from './song'
 import album from './album'
 import artist from './artist'
 import playlist from './playlist'
-import radio from './radio'
-import share from './share'
 import library from './library'
 import plugin from './plugin'
 import { Player } from './audioplayer'
@@ -119,19 +118,17 @@ const Admin = (props) => {
       customRoutes={customRoutes}
       history={history}
       layout={Layout}
+      dashboard={HomeRedirect}
       loginPage={Login}
       logoutButton={Logout}
       {...props}
     >
       {(permissions) => [
-        <Resource name="album" {...album} options={{ subMenu: 'albumList' }} />,
-        <Resource name="artist" {...artist} />,
         <Resource name="song" {...song} />,
-        <Resource
-          name="radio"
-          {...(permissions === 'admin' ? radio.admin : radio.all)}
-        />,
-        config.enableSharing && <Resource name="share" {...share} />,
+        <Resource name="artist" {...artist} />,
+        <Resource name="album" {...album} options={{ subMenu: 'albumList' }} />,
+        <Resource name="radio" />,
+        <Resource name="share" />,
         <Resource
           name="playlist"
           {...playlist}
