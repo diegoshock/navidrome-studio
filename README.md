@@ -14,7 +14,7 @@ Las capturas muestran una biblioteca sintética de prueba. Studio conserva el se
 
 ## Estado y publicación en GHCR
 
-El paquete **linux/amd64** es público y se descarga sin credenciales. El rediseño corresponde a **0.64.2-studio.2**; cada publicación está disponible cuando termina correctamente [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml). En Unraid, usa **Check for Updates → Update** para descargar la nueva imagen y recarga la interfaz. No necesitas volver a crear el contenedor ni usar Docker Compose.
+El paquete **linux/amd64** es público y se descarga sin credenciales. El rediseño **0.64.2-studio.2 ya está publicado**: se comprobó su descarga y arranque con Docker. Las siguientes actualizaciones se pueden seguir en [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml). En Unraid, usa **Check for Updates → Update** para descargar la nueva imagen y recarga la interfaz. No necesitas volver a crear el contenedor ni usar Docker Compose.
 
 Cada push a `main` activa el workflow **Test and publish Navidrome Studio**, que prueba el frontend y publica:
 

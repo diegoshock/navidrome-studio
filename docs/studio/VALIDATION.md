@@ -17,3 +17,14 @@ Base: Navidrome v0.64.2, commit `101145742f4762164202cb4858c9126258bdc463`.
 Las capturas usan diez canciones sintéticas y carátulas originales de prueba; no se utilizó la biblioteca del usuario. El frontend se probó con un backend Navidrome real. El workflow de GHCR compila el binario y publica la imagen con el código correspondiente incluido; su ejecución concreta queda registrada en [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml).
 
 No se ha probado en el Unraid del usuario ni en un dispositivo físico iOS/Android. La emulación táctil utiliza Chromium. El servidor no tiene cambios funcionales de código Go; no se ejecutó la suite completa de integración de upstream. La imagen se publica para `linux/amd64`, como la distribución anterior.
+
+## Imagen publicada comprobada
+
+- Versión: `0.64.2-studio.2`, revisión `fd9f6785b842df64c760d075e8e364c574f58479`.
+- Digest: `sha256:396dd8567e0815a60cc15ebeef5c32382c4aac9039abc2298926fc8e30e556d3`.
+- Disponible públicamente como `ghcr.io/diegoshock/navidrome-studio:latest` y `:sha-fd9f6785b842df64c760d075e8e364c574f58479`.
+- Descarga con Docker y `--version` correctos. Contenedor arrancado con UID/GID 1000, sin capacidades y con `no-new-privileges`, usando una copia consistente de la base de prueba.
+- Navegador contra ese contenedor: diez canciones, orden del lateral, ausencia de barra superior/casillas, pulsación prolongada sin reproducción, teclado y reproducción de audio confirmados, sin errores JavaScript.
+- El código de selección incluido en `/usr/share/navidrome-studio/source.tar.gz` coincide por SHA-256 con el commit publicado.
+
+El tag `latest` puede avanzar; el tag con SHA y el digest identifican esta entrega.
