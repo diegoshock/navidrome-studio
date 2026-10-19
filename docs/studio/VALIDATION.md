@@ -27,13 +27,14 @@ Las capturas usan diez canciones sintéticas y carátulas originales de prueba; 
 
 No se ha probado en el Unraid del usuario ni en un dispositivo físico iOS/Android. La emulación táctil utiliza Chromium. El servidor no tiene cambios funcionales de código Go; no se ejecutó la suite completa de integración de upstream. La imagen se publica para `linux/amd64`, como la distribución anterior.
 
-## Imagen anterior publicada comprobada (studio.2)
+## Imagen publicada comprobada
 
-- Versión: `0.64.2-studio.2`, revisión `fd9f6785b842df64c760d075e8e364c574f58479`.
-- Digest: `sha256:396dd8567e0815a60cc15ebeef5c32382c4aac9039abc2298926fc8e30e556d3`.
-- Disponible públicamente como `ghcr.io/diegoshock/navidrome-studio:latest` y `:sha-fd9f6785b842df64c760d075e8e364c574f58479`.
-- Descarga con Docker y `--version` correctos. Contenedor arrancado con UID/GID 1000, sin capacidades y con `no-new-privileges`, usando una copia consistente de la base de prueba.
-- Navegador contra ese contenedor: diez canciones, orden del lateral, ausencia de barra superior/casillas, pulsación prolongada sin reproducción, teclado y reproducción de audio confirmados, sin errores JavaScript.
-- El código de selección incluido en `/usr/share/navidrome-studio/source.tar.gz` coincide por SHA-256 con el commit publicado.
+- Versión: `0.64.2-studio.3`, revisión `ce43d4ee8a844c6b0b60524fd2cd900dbbfd00da`.
+- Digest: `sha256:a44eca97ebfe06e2b87ac710b930ae14ebf84821d591013ca091ad0c160d1ef2`.
+- Disponible públicamente como `ghcr.io/diegoshock/navidrome-studio:latest` y `:sha-ce43d4ee8a844c6b0b60524fd2cd900dbbfd00da`.
+- [Workflow de pruebas y publicación](https://github.com/diegoshock/navidrome-studio/actions/runs/39323846704): completado correctamente.
+- Consulta anónima del registro, descarga con Docker y `--version` correctos. Contenedor arrancado con UID/GID 1000, sin capacidades y con `no-new-privileges`, usando una copia consistente de la base de prueba y la música en solo lectura.
+- Navegador contra ese contenedor: Reproducir todo, búsqueda y cola filtrada, reproducción/pausa con teclado, anterior/siguiente, volumen/silenciar/restaurar, avance, aleatorio/repetición, cola y cierre con Escape, guardar cola como playlist, fondo de artista y adaptación móvil confirmados sin errores JavaScript.
+- El archivo `StudioPlayerBar.jsx` incluido en `/usr/share/navidrome-studio/source.tar.gz` coincide con el código publicado: SHA-256 `685bc1a8d0e7941604e1cdfd79af11c3da919540da5d465f7464f031fa6f77f6`.
 
-El tag `latest` puede avanzar; el tag con SHA y el digest identifican esta entrega.
+El tag `latest` puede avanzar; el tag con SHA y el digest identifican esta entrega. El template de Unraid mantiene la misma imagen y los mismos puertos y volúmenes; basta con actualizar el contenedor y recargar el navegador.
