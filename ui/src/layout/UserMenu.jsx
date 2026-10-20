@@ -14,8 +14,6 @@ import {
   Popover,
   MenuList,
   Avatar,
-  Card,
-  CardContent,
   Divider,
   Typography,
 } from '@material-ui/core'
@@ -37,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
   username: {
     maxWidth: '11em',
-    marginTop: '-0.7em',
-    marginBottom: '-1em',
+    padding: theme.spacing(1, 2, 2),
+    listStyle: 'none',
   },
   usernameWrap: {
     whiteSpace: 'nowrap',
@@ -109,11 +107,16 @@ const UserMenu = (props) => {
       >
         <MenuList>
           {loaded && (
-            <Card elevation={0} className={classes.username}>
-              <CardContent className={classes.usernameWrap}>
-                <Typography variant={'button'}>{identity.fullName}</Typography>
-              </CardContent>
-            </Card>
+            <li role="presentation" className={classes.username}>
+              <Typography
+                className={classes.usernameWrap}
+                variant="button"
+                component="div"
+                title={identity.fullName}
+              >
+                {identity.fullName}
+              </Typography>
+            </li>
           )}
           <Divider />
           {Children.map(children, (menuItem) =>

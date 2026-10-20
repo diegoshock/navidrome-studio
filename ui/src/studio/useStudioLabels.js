@@ -18,7 +18,7 @@ const labels = {
     navigation: 'Music library',
     selectionHint:
       'Hold a song to select. Keyboard: Space to select, Escape to cancel.',
-    selectPage: 'Select page',
+    selectPage: 'Select visible songs',
     music: 'Music',
     title: 'Your music. Beautifully together.',
     description: 'The albums you love. The ones you are about to rediscover.',
@@ -49,7 +49,7 @@ const labels = {
     navigation: 'Biblioteca musical',
     selectionHint:
       'Mantén pulsada una canción para seleccionar. Teclado: Espacio para seleccionar, Esc para cancelar.',
-    selectPage: 'Seleccionar página',
+    selectPage: 'Seleccionar canciones visibles',
     music: 'Música',
     title: 'Toda tu música. Muy tuya.',
     description: 'Los discos que te encantan. Los que vas a redescubrir.',

@@ -1,3 +1,20 @@
+# Validación de Navidrome Studio 0.64.2-studio.4
+
+## Scroll de canciones y menú de cuenta
+
+- Canciones muestra inicialmente 50 registros y amplía la lista al desplazarse cerca del final. No muestra selector de páginas ni de cantidad de filas.
+- Se conserva el contexto de react-admin para reproducción, selección y acciones múltiples: se solicita una ventana creciente desde el primer registro. Esto vuelve a transferir los registros anteriores; no es una lista virtualizada ni paginación incremental del servidor.
+- Búsqueda, orden y cambio de biblioteca reinician la ventana. El reinicio espera a que react-admin termine su actualización de URL para evitar perder el cambio de tamaño.
+- El encabezado del menú usa espacio propio, sin tarjeta de fondo ni márgenes negativos. Los nombres largos se truncan con el nombre completo disponible como tooltip.
+
+- Lint, comprobación de tipos y compilación de producción correctos. **94 archivos y 807 pruebas correctas**, incluyendo límites de carga, bloqueo de peticiones repetidas, reinicio de filtros/orden/biblioteca y recuperación de errores.
+- Chromium móvil a 390 px: carga por scroll, búsqueda y orden descendente comprobados.
+- Reproductor real con el bundle de producción: reproducción, cola completa/filtrada, volumen, avance, teclado y adaptación móvil correctos; sin errores JavaScript.
+
+No se ha probado en el Unraid del usuario. Los datos de prueba son sintéticos y no se accedió a su biblioteca.
+
+---
+
 # Validación de Navidrome Studio 0.64.2-studio.3
 
 Base: Navidrome v0.64.2, commit `101145742f4762164202cb4858c9126258bdc463`.
