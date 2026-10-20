@@ -10,6 +10,16 @@
 - Bundle de producción: mismo recorrido sin errores JavaScript. Las pistas de álbum se mantienen completas, sin selector de páginas.
 - Backend real con datos de prueba aislados: crear playlist, añadir dos canciones, eliminar una entrada, selección múltiple, búsqueda y reproducción comprobadas. Vista móvil sin desbordamiento horizontal.
 
+## Imagen studio.5 publicada y comprobada
+
+- Revisión: `707e4db6fb1bef3565c22df4f321b865d9a39c2a`.
+- Digest: `sha256:2b03243452374aeaafeb826bfd7964a71d812bd23fa9efba253efc9b058b9e96`.
+- Imagen pública `ghcr.io/diegoshock/navidrome-studio:latest`, también disponible como `:sha-707e4db6fb1bef3565c22df4f321b865d9a39c2a`.
+- [Workflow de pruebas y publicación](https://github.com/diegoshock/navidrome-studio/actions/runs/39436209055): correcto.
+- Consulta anónima del registro, descarga y arranque correctos; `--version` devuelve `0.64.2-studio.5` y la revisión esperada.
+- Navegador contra la imagen publicada: scroll 50 → 100 → 120 en Artistas, Álbumes, Playlists, álbumes de artista y canciones de playlist; ausencia de paginadores y selección en las filas añadidas comprobadas. Sin errores JavaScript.
+- `common/ScrollPagination.jsx` incluido en el archivo de fuentes coincide byte a byte con el repositorio: SHA-256 `81e741fa329ed970086e35fea9ed2c91bbc731a604e506fc8fed54203189df57`.
+
 No se ha probado en el Unraid del usuario. No hay cambios en dependencias ni en el backend Go.
 
 ---
