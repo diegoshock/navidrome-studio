@@ -8,8 +8,20 @@
 - El encabezado del menú usa espacio propio, sin tarjeta de fondo ni márgenes negativos. Los nombres largos se truncan con el nombre completo disponible como tooltip.
 
 - Lint, comprobación de tipos y compilación de producción correctos. **94 archivos y 807 pruebas correctas**, incluyendo límites de carga, bloqueo de peticiones repetidas, reinicio de filtros/orden/biblioteca y recuperación de errores.
+- Chromium con 800 canciones simuladas: carga únicamente al desplazarse, sin IDs duplicados ni selector de páginas; se detiene al completar la colección. Búsqueda/restablecimiento y selección por teclado correctos. El menú se midió después de su transición: el encabezado termina exactamente antes del separador, sin superposición.
 - Chromium móvil a 390 px: carga por scroll, búsqueda y orden descendente comprobados.
 - Reproductor real con el bundle de producción: reproducción, cola completa/filtrada, volumen, avance, teclado y adaptación móvil correctos; sin errores JavaScript.
+
+## Imagen studio.4 publicada y comprobada
+
+- Revisión: `f822221533a733e333e96fb1986f942cbb456ddc`.
+- Digest: `sha256:448aedb459e7c8eee718777187d2f9c520a831c2a140a3b90c2a86e8612e06ab`.
+- Imagen pública: `ghcr.io/diegoshock/navidrome-studio:latest`; tag inmutable `:sha-f822221533a733e333e96fb1986f942cbb456ddc`.
+- [Workflow de pruebas y publicación](https://github.com/diegoshock/navidrome-studio/actions/runs/39356265979): completado correctamente.
+- Consulta anónima del registro, descarga y arranque verificados. `--version` devuelve `0.64.2-studio.4` y la revisión esperada.
+- Chromium contra la imagen publicada: reproducción, búsqueda/cola filtrada, volumen, avance, controles de teclado y adaptación móvil correctos, sin errores JavaScript. Menú de ajustes sin superposición.
+- El archivo `SongScrollPagination.jsx` incluido en el archivo de fuentes de la imagen coincide byte a byte con el repositorio; SHA-256 `ddb8e262dfd9afea19ed5341e340379f86095a949bf15c6fc94d81c41fd79378`.
+- [Captura del menú corregido](screenshots/studio-settings-menu.png).
 
 No se ha probado en el Unraid del usuario. Los datos de prueba son sintéticos y no se accedió a su biblioteca.
 
