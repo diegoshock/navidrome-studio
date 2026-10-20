@@ -20,9 +20,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import { withWidth } from '@material-ui/core'
 import {
   List,
-  Pagination,
   Title,
-  useAlbumsPerPage,
   useResourceRefresh,
   useScrollRestoration,
   useSetToggleableFields,
@@ -41,6 +39,7 @@ import AlbumInfo from './AlbumInfo'
 import ExpandInfoDialog from '../dialogs/ExpandInfoDialog'
 import { humanize } from 'inflection'
 import { makeStyles } from '@material-ui/core/styles'
+import { ScrollPagination, SCROLL_BATCH_SIZE } from '../common/ScrollPagination'
 import StudioLibraryHeader from '../studio/StudioLibraryHeader'
 
 // Waits for rows: restoring into an unrendered list leaves the page too short to hold the offset.
@@ -194,7 +193,7 @@ const AlbumListPagination = ({ albumListType, seed, shownSeed, ...rest }) => {
   if (rerolling && albumListType === 'random') {
     return null
   }
-  return <Pagination {...rest} />
+  return <ScrollPagination resetKey={albumListType} {...rest} />
 }
 
 const randomStartingSeed = Math.random().toString()
@@ -207,10 +206,8 @@ const AlbumListContent = ({ grid, ...props }) => (
 )
 
 const AlbumList = (props) => {
-  const { width } = props
   const shownSeed = useRef(null)
   const albumView = useSelector((state) => state.albumView)
-  const [perPage, perPageOptions] = useAlbumsPerPage(width)
   const location = useLocation()
   const version = useVersion()
   const refresh = useRefresh()
@@ -266,10 +263,9 @@ const AlbumList = (props) => {
         filter={{ seed }}
         actions={<AlbumListActions />}
         filters={<AlbumFilter />}
-        perPage={perPage}
+        perPage={SCROLL_BATCH_SIZE}
         pagination={
           <AlbumListPagination
-            rowsPerPageOptions={perPageOptions}
             albumListType={albumListType}
             seed={seed}
             shownSeed={shownSeed}

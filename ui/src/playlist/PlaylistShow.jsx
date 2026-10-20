@@ -10,15 +10,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import PlaylistDetails from './PlaylistDetails'
 import PlaylistSongs from './PlaylistSongs'
 import PlaylistActions from './PlaylistActions'
-import {
-  Pagination,
-  Title,
-  canChangeTracks,
-  getStoredPerPage,
-  useResourceRefresh,
-} from '../common'
+import { Title, canChangeTracks, useResourceRefresh } from '../common'
 
-const playlistTrackPerPageOptions = [100, 250, 500]
+import { ScrollPagination, SCROLL_BATCH_SIZE } from '../common/ScrollPagination'
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -48,10 +42,7 @@ const PlaylistShowLayout = (props) => {
           reference="playlistTrack"
           target="playlist_id"
           sort={{ field: 'id', order: 'ASC' }}
-          perPage={getStoredPerPage(
-            'playlistTrack',
-            playlistTrackPerPageOptions,
-          )}
+          perPage={SCROLL_BATCH_SIZE}
           filter={{ playlist_id: props.id }}
         >
           <PlaylistSongs
@@ -66,9 +57,7 @@ const PlaylistShowLayout = (props) => {
             }
             resource={'playlistTrack'}
             exporter={false}
-            pagination={
-              <Pagination rowsPerPageOptions={playlistTrackPerPageOptions} />
-            }
+            pagination={<ScrollPagination resetKey={record.id} />}
           />
         </ReferenceManyField>
       )}

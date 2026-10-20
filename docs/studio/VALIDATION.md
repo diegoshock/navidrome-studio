@@ -1,3 +1,19 @@
+# Navidrome Studio 0.64.2-studio.5
+
+- Se comparte `common/ScrollPagination.jsx` entre Canciones, Artistas, Álbumes y Playlists. Cada lista comienza con 50 registros y crece al desplazarse cerca del final; no presenta selectores de páginas ni de cantidad de filas.
+- También se aplica a los álbumes de un artista y a las pistas de una playlist. El cambio de colección reinicia la ventana mediante su ID, además del reinicio existente por búsqueda, orden o biblioteca.
+- Se conserva la paginación de las pantallas administrativas. Las pistas de un álbum siguen cargándose completas, sin paginación, para mantener las acciones sobre el álbum completo.
+- Se conserva la estrategia de ventana creciente de studio.4: los registros anteriores vuelven a transferirse y la lista no está virtualizada.
+
+- Lint, comprobación de tipos y compilación correctos. **94 archivos y 808 pruebas correctas**, incluida la nueva comprobación de reinicio al cambiar de colección.
+- Chromium en escritorio y a 390 px: Artistas, Álbumes, Playlists, álbumes de un artista y pistas de una playlist cargan 50 → 100 → 120 registros simulados, sin carga anticipada ni paginadores; se detienen al completar la colección. Las filas añadidas permiten selección por teclado.
+- Bundle de producción: mismo recorrido sin errores JavaScript. Las pistas de álbum se mantienen completas, sin selector de páginas.
+- Backend real con datos de prueba aislados: crear playlist, añadir dos canciones, eliminar una entrada, selección múltiple, búsqueda y reproducción comprobadas. Vista móvil sin desbordamiento horizontal.
+
+No se ha probado en el Unraid del usuario. No hay cambios en dependencias ni en el backend Go.
+
+---
+
 # Validación de Navidrome Studio 0.64.2-studio.4
 
 ## Scroll de canciones y menú de cuenta

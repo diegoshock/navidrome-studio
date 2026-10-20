@@ -34,7 +34,7 @@ import { SongListActions } from './SongListActions'
 import { AlbumLinkField } from './AlbumLinkField'
 import { SongBulkActions, QualityInfo, useSelectedFields } from '../common'
 import config from '../config'
-import { SONG_BATCH_SIZE, SongScrollPagination } from './SongScrollPagination'
+import { SCROLL_BATCH_SIZE, ScrollPagination } from '../common/ScrollPagination'
 import ExpandInfoDialog from '../dialogs/ExpandInfoDialog'
 
 const useStyles = makeStyles({
@@ -221,8 +221,8 @@ const SongList = (props) => {
         bulkActionButtons={<SongBulkActions />}
         actions={<SongListActions />}
         filters={<SongFilter />}
-        perPage={SONG_BATCH_SIZE}
-        pagination={<SongScrollPagination />}
+        perPage={SCROLL_BATCH_SIZE}
+        pagination={<ScrollPagination />}
       >
         <SongDatagrid
           rowClick={handleRowClick}

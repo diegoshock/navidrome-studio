@@ -3,12 +3,13 @@ import { Button, CircularProgress } from '@material-ui/core'
 import { useListContext, useTranslate } from 'react-admin'
 import { useSelector } from 'react-redux'
 
-export const SONG_BATCH_SIZE = 50
+export const SCROLL_BATCH_SIZE = 50
 
 // Keep the complete visible prefix in react-admin's list context so playback,
 // bulk actions and refreshed records all use the same ordered collection.
-export const SongScrollPagination = () => {
+export const ScrollPagination = ({ resetKey }) => {
   const {
+    resource,
     ids,
     total,
     loading,
@@ -25,7 +26,13 @@ export const SongScrollPagination = () => {
   const sentinel = useRef(null)
   const requested = useRef(null)
   const previousQuery = useRef(null)
-  const query = JSON.stringify([filterValues, currentSort, libraries])
+  const query = JSON.stringify([
+    resource,
+    resetKey,
+    filterValues,
+    currentSort,
+    libraries,
+  ])
 
   useEffect(() => {
     if (previousQuery.current === query) return
@@ -35,7 +42,7 @@ export const SongScrollPagination = () => {
       previousQuery.current = query
       requested.current = null
       setPage(1)
-      setPerPage(SONG_BATCH_SIZE)
+      setPerPage(SCROLL_BATCH_SIZE)
     }, 0)
     return () => clearTimeout(timer)
   }, [query, setPage, setPerPage])
@@ -53,7 +60,7 @@ export const SongScrollPagination = () => {
       const rect = sentinel.current?.getBoundingClientRect()
       if (rect && rect.top <= window.innerHeight + 300 && rect.bottom >= 0) {
         requested.current = perPage
-        setPerPage(perPage + SONG_BATCH_SIZE)
+        setPerPage(perPage + SCROLL_BATCH_SIZE)
       }
     }
     // Capture also handles scrolling inside the application layout. Loading is
