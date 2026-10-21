@@ -7,6 +7,16 @@
 - 120 canciones simuladas: carga 50 → 100 → 120 al desplazarse, sin paginador; selección de una fila añadida y cancelación por teclado correctas. Vista móvil a 390 px sin desbordamiento. Sin errores JavaScript.
 - Archivos principales: `layout/Menu.jsx`, `routes.jsx`, `song/SongList.jsx` y `studio/useStudioLabels.js`. No hay cambios de dependencias ni del backend.
 
+## Imagen studio.6 publicada y comprobada
+
+- Revisión: `58f6890b80dbc3c8061d1365fc707b62163b4131`.
+- Digest: `sha256:5e5764fa9b1863e029a117e4a5bbdf52f0930c6657f02b53dcb247fcf056ece1`.
+- Imagen pública `ghcr.io/diegoshock/navidrome-studio:latest`, también disponible como `:sha-58f6890b80dbc3c8061d1365fc707b62163b4131`.
+- [Pruebas y publicación en GitHub](https://github.com/diegoshock/navidrome-studio/actions/runs/39622279116): ambos trabajos correctos; publicación iniciada mediante `workflow_dispatch`.
+- Consulta anónima del registro, descarga y arranque correctos. `--version` devuelve `0.64.2-studio.6` y la revisión esperada.
+- Chromium contra esa imagen: sección nueva, orden por incorporación, búsquedas independientes, reproducción real, recarga, scroll 50 → 100 → 120, selección por teclado y adaptación móvil comprobados sin errores JavaScript.
+- El archivo `song/SongList.jsx` incluido en el archivo de fuentes coincide con el repositorio: SHA-256 `e6073ab4864952b0e7b4d6d974530137337d77589f8471ddea7f4a64f4b082ce`.
+
 No se ha probado en el Unraid del usuario; se usaron datos de prueba aislados.
 
 ---
