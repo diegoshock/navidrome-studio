@@ -35,6 +35,7 @@ import { AlbumLinkField } from './AlbumLinkField'
 import { SongBulkActions, QualityInfo, useSelectedFields } from '../common'
 import config from '../config'
 import { SCROLL_BATCH_SIZE, ScrollPagination } from '../common/ScrollPagination'
+import { useStudioLabels } from '../studio/useStudioLabels'
 import ExpandInfoDialog from '../dialogs/ExpandInfoDialog'
 
 const useStyles = makeStyles({
@@ -128,7 +129,8 @@ const SongFilter = (props) => {
   )
 }
 
-const SongList = (props) => {
+const SongList = ({ recentlyAdded = false, ...props }) => {
+  const labels = useStudioLabels()
   const classes = useStyles()
   const dispatch = useDispatch()
   const isXsmall = useMediaQuery((theme) => theme.breakpoints.down('xs'))
@@ -215,7 +217,14 @@ const SongList = (props) => {
     <>
       <List
         {...props}
-        sort={{ field: 'title', order: 'ASC' }}
+        sort={
+          recentlyAdded
+            ? { field: 'recently_added', order: 'DESC' }
+            : { field: 'title', order: 'ASC' }
+        }
+        {...(recentlyAdded
+          ? { title: labels.recentSongs, syncWithLocation: false }
+          : {})}
         exporter={false}
         empty={false}
         bulkActionButtons={<SongBulkActions />}

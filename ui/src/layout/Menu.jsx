@@ -15,6 +15,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import MenuOpenIcon from '@material-ui/icons/MenuOpen'
 import MenuIcon from '@material-ui/icons/Menu'
+import LibraryAddOutlinedIcon from '@material-ui/icons/LibraryAddOutlined'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import PlaylistsSubMenu from './PlaylistsSubMenu'
 import LibrarySelector from '../common/LibrarySelector'
@@ -144,6 +145,18 @@ const Menu = ({ logout }) => {
                 activeClassName={classes.active}
               />
             ))}
+          {resources.some((r) => r.name === 'song') && (
+            <MenuItemLink
+              to="/recently-added"
+              role="link"
+              aria-label={labels.recentSongs}
+              primaryText={labels.recentSongs}
+              leftIcon={<LibraryAddOutlinedIcon />}
+              sidebarIsOpen={open}
+              className={classes.item}
+              activeClassName={classes.active}
+            />
+          )}
         </nav>
         {open && <LibrarySelector />}
         {config.devSidebarPlaylists && open && (

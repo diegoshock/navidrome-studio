@@ -48,7 +48,12 @@ it('orders the four music destinations and omits Radio and Shares even when regi
     '/artist',
     '/album/all',
     '/playlist',
+    '/recently-added',
   ])
+  expect(screen.getByRole('link', { name: 'Recently added' })).toHaveAttribute(
+    'href',
+    '/recently-added',
+  )
   expect(screen.getByText('Saved playlists')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Settings' })).toBeInTheDocument()
 })

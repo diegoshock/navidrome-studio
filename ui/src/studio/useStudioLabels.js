@@ -2,6 +2,7 @@ import { useLocale } from 'react-admin'
 
 const labels = {
   en: {
+    recentSongs: 'Recently added',
     nowPlaying: 'Now playing',
     queue: 'Play queue',
     repeat: 'Repeat',
@@ -33,6 +34,7 @@ const labels = {
     shortcuts: 'Browse your library',
   },
   es: {
+    recentSongs: 'Agregadas recientemente',
     nowPlaying: 'Reproduciendo ahora',
     queue: 'Cola de reproducción',
     repeat: 'Repetir',

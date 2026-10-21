@@ -1,3 +1,16 @@
+# Navidrome Studio 0.64.2-studio.6
+
+- Nuevo acceso lateral **Agregadas recientemente**, ruta `/recently-added`, reutilizando el listado de canciones y sus acciones. Usa el orden nativo `recently_added DESC` de Navidrome (respeta su configuración `RecentlyAddedByModTime`).
+- Parámetros locales en esta vista: buscar u ordenar aquí no modifica los filtros guardados de Canciones. Volver a entrar restaura el orden de incorporación descendente.
+- Lint, comprobación de tipos, compilación y **94 archivos / 808 pruebas** correctos.
+- Chromium con bundle de producción: acceso desde el lateral y por URL, encabezado, orden enviado al servidor, filtros independientes al alternar entre vistas, reproducción real y cola de diez canciones comprobados.
+- 120 canciones simuladas: carga 50 → 100 → 120 al desplazarse, sin paginador; selección de una fila añadida y cancelación por teclado correctas. Vista móvil a 390 px sin desbordamiento. Sin errores JavaScript.
+- Archivos principales: `layout/Menu.jsx`, `routes.jsx`, `song/SongList.jsx` y `studio/useStudioLabels.js`. No hay cambios de dependencias ni del backend.
+
+No se ha probado en el Unraid del usuario; se usaron datos de prueba aislados.
+
+---
+
 # Navidrome Studio 0.64.2-studio.5
 
 - Se comparte `common/ScrollPagination.jsx` entre Canciones, Artistas, Álbumes y Playlists. Cada lista comienza con 50 registros y crece al desplazarse cerca del final; no presenta selectores de páginas ni de cantidad de filas.
