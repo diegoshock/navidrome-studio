@@ -16,7 +16,7 @@ import {
   useTranslate,
   useVersion,
 } from 'react-admin'
-import Logo from '../icons/android-icon-192x192.png'
+import StudioIcon from '../studio/StudioIcon'
 
 import Notification from './Notification'
 import useCurrentTheme from '../themes/useCurrentTheme'
@@ -123,7 +123,11 @@ const FormLogin = ({ loading, handleSubmit, validate }) => {
           <div className={classes.main}>
             <Card className={classes.card}>
               <div className={classes.avatar}>
-                <img src={Logo} className={classes.icon} alt={'logo'} />
+                <StudioIcon
+                  badge
+                  className={classes.icon}
+                  alt="Studio for Navidrome"
+                />
               </div>
               <div className={classes.systemName}>
                 <a
@@ -132,7 +136,7 @@ const FormLogin = ({ loading, handleSubmit, validate }) => {
                   rel="noopener noreferrer"
                   className={classes.systemNameLink}
                 >
-                  Navidrome
+                  Studio for Navidrome
                 </a>
               </div>
               {config.welcomeMessage && (
@@ -255,7 +259,11 @@ const FormSignUp = ({ loading, handleSubmit, validate }) => {
           <div className={classes.main}>
             <Card className={classes.card}>
               <div className={classes.avatar}>
-                <img src={Logo} className={classes.icon} alt={'logo'} />
+                <StudioIcon
+                  badge
+                  className={classes.icon}
+                  alt="Studio for Navidrome"
+                />
               </div>
               <div className={classes.welcome}>
                 {translate('ra.auth.welcome1')}

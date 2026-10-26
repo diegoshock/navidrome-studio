@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="512" height="512" role="img" aria-labelledby="title">
+<!-- Original Studio artwork. Copyright 2026 Studio contributors. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">Studio for Navidrome</title>
+<desc>Original play symbol and three audio level bars. Independent project, not the Navidrome logo.</desc>
+
+<g fill="#fff"><path d="M6 21Q0 17 0 24V104Q0 111 6 107L56 69Q62 64 56 59Z"/>
+<rect class="bar b1" x="66" y="36" width="14" height="56" rx="7"/>
+<rect class="bar b2" x="88" y="0" width="14" height="128" rx="7"/>
+<rect class="bar b3" x="110" y="24" width="14" height="80" rx="7"/></g>
+</svg>

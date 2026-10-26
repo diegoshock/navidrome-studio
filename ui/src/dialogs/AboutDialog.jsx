@@ -472,7 +472,7 @@ const AboutDialog = ({ open, onClose }) => {
       className={classes.expandableDialog}
     >
       <DialogTitle id="about-dialog-title" onClose={onClose}>
-        Navidrome Music Server
+        Studio for Navidrome
       </DialogTitle>
       <DialogContent dividers>
         <TabContent

@@ -1,4 +1,8 @@
-# Navidrome Studio
+# Studio for Navidrome
+
+<img src="ui/public/icons/studio-for-navidrome-badge-animated.svg" alt="Studio for Navidrome" width="96" height="96">
+
+Proyecto independiente, sin afiliación ni respaldo del proyecto Navidrome.
 
 Versión no oficial de **Navidrome 0.64.2** con una interfaz oscura y minimalista, inspirada visualmente en Tidal. Canciones es la vista inicial: portadas, títulos y artistas sobre fondo negro, con dorado reservado para textos seleccionados.
 
@@ -14,9 +18,20 @@ Mantén pulsada una canción durante medio segundo para seleccionarla y toca otr
 
 Las capturas muestran una biblioteca sintética de prueba. Studio conserva el servidor, autenticación, escáner, reproducción y API Subsonic/OpenSubsonic de Navidrome. No incorpora el clasificador de géneros de Playlistr: Playlistr sigue siendo una aplicación independiente que se puede conectar a este servidor.
 
+## Iconos
+
+Icono original negro animado, variantes clara/oscura y archivos estáticos para lanzadores. El logo oficial de Navidrome no se ha modificado.
+
+- [SVG negro animado](https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/ui/public/icons/studio-for-navidrome-animated.svg)
+- [SVG negro estático](https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/ui/public/icons/studio-for-navidrome-dark.svg) · [SVG blanco estático](https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/ui/public/icons/studio-for-navidrome-light.svg)
+- [Paquete ZIP para Dashboard Icons](https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/docs/studio/icons/studio-for-navidrome-icons.zip)
+- [Licencia y guía de envío](docs/studio/icons/README.md). Los iconos originales son Apache-2.0; la aplicación sigue bajo GPLv3.
+
+La aplicación incorpora el icono en el lateral, el inicio de sesión, favicons, iconos de instalación/PWA y el template Unraid. La animación respeta la preferencia de reducir movimiento; los PNG/ICO son estáticos. Los identificadores del repositorio, la imagen Docker y el contenedor no cambian.
+
 ## Estado y publicación en GHCR
 
-El paquete **linux/amd64** es público y se descarga sin credenciales. La entrega **0.64.2-studio.6 ya está publicada y comprobada con Docker**: añade **Agregadas recientemente** al lateral: canciones ordenadas por incorporación descendente, con búsqueda independiente, reproducción, selección y scroll automático. Se mantiene el scroll automático de Canciones, Artistas, Álbumes y Playlists. Las siguientes actualizaciones se pueden seguir en [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml). En Unraid, usa **Check for Updates → Update** para descargar la nueva imagen y recarga la interfaz. No necesitas volver a crear el contenedor ni usar Docker Compose.
+El paquete **linux/amd64** es público y se descarga sin credenciales. La entrega **0.64.2-studio.7** incorpora la identidad gráfica original de Studio: icono animado, favicons, PWA y template Unraid. Conserva **Agregadas recientemente**, búsquedas independientes, reproducción, selección y scroll automático. Se mantiene el scroll automático de Canciones, Artistas, Álbumes y Playlists. Las siguientes actualizaciones se pueden seguir en [Actions](https://github.com/diegoshock/navidrome-studio/actions/workflows/publish.yml). En Unraid, usa **Check for Updates → Update** para descargar la nueva imagen y recarga la interfaz. No necesitas volver a crear el contenedor ni usar Docker Compose.
 
 Cada push a `main` activa el workflow **Test and publish Navidrome Studio**, que prueba el frontend y publica:
 

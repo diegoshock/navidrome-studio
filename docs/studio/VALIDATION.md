@@ -1,3 +1,15 @@
+# Studio for Navidrome 0.64.2-studio.7
+
+- Icono original (reproducción + niveles de audio), sin reutilizar el logo de Navidrome: SVG negro animado, variantes blanca/negra estáticas, insignia sobre blanco y PNG/ICO para lanzadores. Assets originales bajo Apache-2.0; la aplicación conserva GPLv3.
+- Integrado en lateral, inicio de sesión, favicon, iconos Apple/Windows/PWA, imagen de recurso predeterminada, README y template Unraid. Nombre visible Studio for Navidrome; se conservan los identificadores de repositorio e imagen para las instalaciones existentes.
+- SVG XML validado sin scripts, referencias externas ni imágenes raster. Movimiento comprobado en Chromium mediante diferencias de imagen entre fotogramas. La vista directa respeta `prefers-reduced-motion`; la aplicación selecciona el SVG estático mediante `<picture>` para cubrir navegadores que no transmiten esa preferencia a imágenes SVG externas.
+- Lint, comprobación de tipos, compilación y **94 archivos / 808 pruebas** correctos. Manifest PWA, referencias a iconos, XML Unraid y archivo ZIP comprobados.
+- ZIP de envío con SVG, PNG, licencia y guía. Dashboard Icons exige sesión en su formulario y aprobación de sus administradores: no se ha enviado ni se afirma aceptación en ese catálogo.
+
+La política de marca consultada está enlazada en [la guía de iconos](icons/README.md). No se ha probado en el Unraid del usuario.
+
+---
+
 # Navidrome Studio 0.64.2-studio.6
 
 - Nuevo acceso lateral **Agregadas recientemente**, ruta `/recently-added`, reutilizando el listado de canciones y sus acciones. Usa el orden nativo `recently_added DESC` de Navidrome (respeta su configuración `RecentlyAddedByModTime`).

@@ -10,7 +10,7 @@
   <Overview>Versión no oficial de Navidrome 0.64.2 con interfaz oscura Studio, navegación lateral y selección de canciones por pulsación prolongada. Imagen pública en GHCR. Usa datos separados para probarla junto a tu Navidrome actual; nunca compartas /data entre dos servidores activos. Linux amd64.</Overview>
   <Category>MediaApp:Music</Category>
   <WebUI>http://[IP]:[PORT:4533]/</WebUI>
-  <Icon/>
+  <Icon>https://raw.githubusercontent.com/diegoshock/navidrome-studio/main/ui/public/icons/studio-for-navidrome.png</Icon>
   <ExtraParams>--user 99:100 --security-opt=no-new-privileges --cap-drop=ALL</ExtraParams>
   <PostArgs/>
   <Config Name="Puerto Web" Target="4533" Default="4534" Mode="tcp" Description="Contenedor 4533; host 4534 para coexistir con Navidrome" Type="Port" Display="always" Required="true" Mask="false">4534</Config>

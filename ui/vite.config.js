@@ -59,15 +59,14 @@ export default defineConfig({
 // PWA manifest
 function manifest() {
   return {
-    name: 'Navidrome',
-    short_name: 'Navidrome',
-    description:
-      'Navidrome, an open source web-based music collection server and streamer',
+    name: 'Studio for Navidrome',
+    short_name: 'Studio for Navidrome',
+    description: 'Independent music server interface based on Navidrome',
     categories: ['music', 'entertainment'],
     display: 'standalone',
     start_url: './',
-    background_color: 'white',
-    theme_color: 'blue',
+    background_color: '#000000',
+    theme_color: '#000000',
     icons: [
       {
         src: './android-chrome-192x192.png',

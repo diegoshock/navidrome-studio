@@ -5,5 +5,5 @@ export const Title = ({ subTitle, args }) => {
   const translate = useTranslate()
   const text = translate(subTitle, { ...args, _: subTitle })
 
-  return <span>{text ? text : 'Navidrome'}</span>
+  return <span>{text ? text : 'Studio for Navidrome'}</span>
 }
