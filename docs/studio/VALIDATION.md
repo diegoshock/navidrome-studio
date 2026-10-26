@@ -6,6 +6,15 @@
 - Lint, comprobación de tipos, compilación y **94 archivos / 808 pruebas** correctos. Manifest PWA, referencias a iconos, XML Unraid y archivo ZIP comprobados.
 - ZIP de envío con SVG, PNG, licencia y guía. Dashboard Icons exige sesión en su formulario y aprobación de sus administradores: no se ha enviado ni se afirma aceptación en ese catálogo.
 
+## Publicación comprobada
+
+- Revisión `e713d8bbd044957b4de6927b397470562b10deca`, versión `0.64.2-studio.7`.
+- Digest `sha256:f1ad9e7a268d776449678768662208e6bd0a75f1fabc58c3a1c8fd6f821bdfe1`.
+- [Workflow](https://github.com/diegoshock/navidrome-studio/actions/runs/40375056115): pruebas y publicación correctas.
+- SVG y ZIP públicos comprobados con HTTP 200, MIME correcto y contenido idéntico al repositorio.
+- Descarga pública y arranque de la imagen correctos. Alta de administrador en datos aislados y navegador contra el contenedor publicado: iconos animados en acceso/lateral, selección del archivo estático con reducción de movimiento, identidad PWA y anchura móvil comprobadas, sin errores JavaScript.
+- SVG incluido en el archivo de fuentes idéntico al repositorio: SHA-256 `2eee3c5a83eb9deac0646a17792670478b6cca96ab85170925cfb570107260fa`.
+
 La política de marca consultada está enlazada en [la guía de iconos](icons/README.md). No se ha probado en el Unraid del usuario.
 
 ---
