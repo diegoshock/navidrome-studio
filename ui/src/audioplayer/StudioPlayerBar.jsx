@@ -19,7 +19,9 @@ import RepeatOneIcon from '@material-ui/icons/RepeatOne'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined'
 import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined'
+import FullscreenIcon from '@material-ui/icons/Fullscreen'
 import { Artwork } from '../common/Artwork'
+import { QualityInfo } from '../common/QualityInfo'
 import { setPlayMode, setVolume as setPlayerVolume } from '../actions'
 import { useStudioLabels } from '../studio/useStudioLabels'
 import { useAudioStatus } from './useAudioStatus'
@@ -33,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     right: 0,
     zIndex: theme.zIndex.drawer + 1,
-    height: 'calc(96px + env(safe-area-inset-bottom, 0px))',
-    padding: '12px 20px calc(12px + env(safe-area-inset-bottom, 0px))',
+    height: 'calc(78px + env(safe-area-inset-bottom, 0px))',
+    padding: '7px 16px calc(7px + env(safe-area-inset-bottom, 0px))',
     boxSizing: 'border-box',
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr) minmax(280px, 1.4fr) minmax(0, 1fr)',
@@ -49,18 +51,18 @@ const useStyles = makeStyles((theme) => ({
     '& button:disabled': { color: '#777' },
     '@media (max-width:1100px)': { gap: 16, paddingLeft: 12, paddingRight: 12 },
     '@media (max-width:809px)': {
-      height: 'calc(152px + env(safe-area-inset-bottom, 0px))',
+      height: 'calc(132px + env(safe-area-inset-bottom, 0px))',
       padding: '10px 12px calc(8px + env(safe-area-inset-bottom, 0px))',
       gridTemplateColumns: 'minmax(0, 1fr) auto',
-      gridTemplateRows: '44px 76px',
+      gridTemplateRows: '40px 68px',
       gap: '6px 8px',
     },
   },
   track: { display: 'flex', gap: 12, alignItems: 'center', minWidth: 0 },
   coverLink: { flexShrink: 0, lineHeight: 0 },
   cover: {
-    width: 52,
-    height: 52,
+    width: 48,
+    height: 48,
     borderRadius: 3,
     '@media (max-width:809px)': { width: 40, height: 40 },
   },
@@ -121,6 +123,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 2,
     '@media (max-width:1100px)': { width: 64 },
     '@media (max-width:809px)': { width: 48 },
+  },
+  quality: {
+    marginRight: 2,
+    '& .MuiChip-label': { fontSize: 9, paddingLeft: 7, paddingRight: 7 },
+    '@media (max-width:1000px)': { display: 'none' },
   },
 }))
 
@@ -308,6 +315,16 @@ const StudioPlayerBar = ({
         </div>
       </div>
       <div className={classes.tools}>
+        {!current.isRadio && song && (
+          <QualityInfo
+            record={song}
+            className={classes.quality}
+            {...gainInfo}
+          />
+        )}
+        <Control label={labels.fullscreen} component={Link} to="/now-playing">
+          <FullscreenIcon fontSize="small" />
+        </Control>
         <Control
           label={`${labels.queue} (${playerState.queue.length})`}
           aria-expanded={queueOpen}

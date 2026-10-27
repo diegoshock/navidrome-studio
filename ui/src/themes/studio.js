@@ -43,9 +43,9 @@ export const createStudioTheme = (dark = false) => {
         root: { minWidth: 0, color: foreground },
         content: {
           minWidth: 0,
-          padding: '32px 36px 28px',
-          '@media (min-width:0px)': { paddingLeft: 36 },
-          '@media (max-width:959px)': { padding: '24px 20px' },
+          padding: '18px 24px 24px',
+          '@media (min-width:0px)': { paddingLeft: 24 },
+          '@media (max-width:959px)': { padding: '18px 16px' },
           '@media (max-width:599px)': { padding: '20px 12px 24px' },
         },
       },
@@ -148,9 +148,10 @@ export const createStudioTheme = (dark = false) => {
       MuiChip: { root: { backgroundColor: surface, borderRadius: 4 } },
       MuiTableCell: {
         root: {
-          borderBottom: `1px solid ${border}`,
-          padding: '12px',
-          '@media(max-width:599px)': { padding: '10px 5px' },
+          borderBottom: 'none',
+          padding: '9px 10px',
+          fontSize: 12,
+          '@media(max-width:599px)': { padding: '8px 5px' },
         },
         head: {
           color: muted,
@@ -169,12 +170,12 @@ export const createStudioTheme = (dark = false) => {
         root: { margin: '16px 0' },
         link: { borderRadius: 4, overflow: 'hidden', boxShadow: 'none' },
         albumName: {
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 500,
           color: foreground,
           marginTop: 10,
         },
-        albumSubtitle: { fontSize: 12, color: muted, marginTop: 3 },
+        albumSubtitle: { fontSize: 10, color: muted, marginTop: 2 },
         albumVersion: { color: muted },
         tileBar: { padding: 6 },
         tileBarMobile: { padding: 4 },

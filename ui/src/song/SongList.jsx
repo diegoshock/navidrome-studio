@@ -129,7 +129,13 @@ const SongFilter = (props) => {
   )
 }
 
-const SongList = ({ recentlyAdded = false, ...props }) => {
+const SongList = ({
+  recentlyAdded = false,
+  listFilter,
+  listSort,
+  listTitle,
+  ...props
+}) => {
   const labels = useStudioLabels()
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -218,12 +224,14 @@ const SongList = ({ recentlyAdded = false, ...props }) => {
       <List
         {...props}
         sort={
-          recentlyAdded
+          listSort ||
+          (recentlyAdded
             ? { field: 'recently_added', order: 'DESC' }
-            : { field: 'title', order: 'ASC' }
+            : { field: 'title', order: 'ASC' })
         }
-        {...(recentlyAdded
-          ? { title: labels.recentSongs, syncWithLocation: false }
+        filter={listFilter}
+        {...(recentlyAdded || listTitle
+          ? { title: listTitle || labels.recentSongs, syncWithLocation: false }
           : {})}
         exporter={false}
         empty={false}

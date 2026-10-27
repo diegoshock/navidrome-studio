@@ -6,19 +6,19 @@ import { setSidebarVisibility } from 'react-admin'
 import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  root: { width: ({ narrow }) => (narrow ? 64 : 240), flexShrink: 0 },
+  root: { width: ({ narrow }) => (narrow ? 52 : 184), flexShrink: 0 },
   paper: {
-    width: ({ open }) => (open ? 240 : 64),
+    width: ({ open }) => (open ? 184 : 52),
     top: 0,
     bottom: ({ playing }) =>
-      playing ? 'calc(96px + env(safe-area-inset-bottom, 0px))' : 0,
+      playing ? 'calc(78px + env(safe-area-inset-bottom, 0px))' : 0,
     '@media (max-width:809px)': {
       bottom: ({ playing }) =>
-        playing ? 'calc(152px + env(safe-area-inset-bottom, 0px))' : 0,
+        playing ? 'calc(132px + env(safe-area-inset-bottom, 0px))' : 0,
     },
     height: 'auto',
     background: theme.palette.background.default,
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: 'none',
     overflow: 'hidden',
   },
   backdrop: { zIndex: theme.zIndex.drawer - 1 },

@@ -19,17 +19,7 @@ const renderHome = () =>
     </MemoryRouter>,
   )
 beforeEach(() => localStorage.clear())
-it('lands in songs for new users', () => {
+it('lands in Discover for new users', () => {
   renderHome()
-  expect(screen.getByRole('status')).toHaveTextContent('/song')
-})
-it('keeps explicit personal landing-page preferences operational', () => {
-  localStorage.setItem('defaultView', 'playlist')
-  renderHome()
-  expect(screen.getByRole('status')).toHaveTextContent('/playlist')
-})
-it('replaces a saved radio destination with songs', () => {
-  localStorage.setItem('defaultView', 'radio')
-  renderHome()
-  expect(screen.getByRole('status')).toHaveTextContent('/song')
+  expect(screen.getByRole('status')).toHaveTextContent('/discover')
 })

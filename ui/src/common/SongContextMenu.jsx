@@ -23,6 +23,8 @@ import {
   openShareMenu,
 } from '../actions'
 import { LoveButton } from './LoveButton'
+import { useToggleLove } from './useToggleLove'
+import { useStudioLabels } from '../studio/useStudioLabels'
 import config from '../config'
 import { playSimilar } from './playbackActions.js'
 import { formatBytes } from '../utils'
@@ -75,6 +77,8 @@ export const SongContextMenu = ({
   const [playlistsLoaded, setPlaylistsLoaded] = useState(false)
   const { permissions } = usePermissions()
   const redirect = useRedirect()
+  const studioLabels = useStudioLabels()
+  const [toggleLove] = useToggleLove(resource, record)
 
   const options = {
     playNow: {
@@ -120,6 +124,13 @@ export const SongContextMenu = ({
             onSuccess: (id) => onAddToPlaylist(id),
           }),
         ),
+    },
+    favorite: {
+      enabled: config.enableFavourites && !record.missing,
+      label: record.starred
+        ? studioLabels.removeFavorite
+        : studioLabels.addFavorite,
+      action: () => toggleLove(),
     },
     showInPlaylist: {
       enabled: true,

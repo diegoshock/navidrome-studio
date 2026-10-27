@@ -9,19 +9,26 @@ import Sidebar from './Sidebar'
 import { useLocation } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
 import Notification from './Notification'
+import StudioTopBar from './StudioTopBar'
 import useCurrentTheme from '../themes/useCurrentTheme'
 import { useSearchRefocus } from '../common'
 
 const useStyles = makeStyles({
   root: {
     paddingBottom: ({ addPadding }) =>
-      addPadding ? 'calc(104px + env(safe-area-inset-bottom, 0px))' : 0,
+      addPadding ? 'calc(86px + env(safe-area-inset-bottom, 0px))' : 0,
     '@media (max-width:809px)': {
       paddingBottom: ({ addPadding }) =>
-        addPadding ? 'calc(160px + env(safe-area-inset-bottom, 0px))' : 0,
+        addPadding ? 'calc(140px + env(safe-area-inset-bottom, 0px))' : 0,
     },
   },
   appFrame: { marginTop: '0 !important' },
+  contentWithHeader: {
+    minWidth: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+  },
   heading: {
     fontSize: 36,
     fontWeight: 700,
@@ -58,13 +65,20 @@ const Layout = (props) => {
         theme={theme}
         notification={Notification}
       >
-        <Typography
-          component={hasDetailHeading ? 'div' : 'h1'}
-          hidden={hasDetailHeading}
-          id="react-admin-title"
-          className={classes.heading}
-        />
-        {props.children}
+        <div className={classes.contentWithHeader}>
+          <StudioTopBar logout={props.logout} />
+          <Typography
+            component={hasDetailHeading ? 'div' : 'h1'}
+            hidden={
+              hasDetailHeading ||
+              location.pathname === '/discover' ||
+              location.pathname === '/now-playing'
+            }
+            id="react-admin-title"
+            className={classes.heading}
+          />
+          {props.children}
+        </div>
       </RALayout>
     </HotKeys>
   )

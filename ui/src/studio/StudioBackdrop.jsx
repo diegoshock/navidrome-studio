@@ -16,9 +16,9 @@ const useStyles = makeStyles({
       height: '100%',
       objectFit: 'cover',
       objectPosition: 'center 35%',
-      filter: 'blur(36px) saturate(.65)',
-      transform: 'scale(1.15)',
-      opacity: 0.38,
+      filter: 'saturate(.72)',
+      transform: 'none',
+      opacity: 0.32,
     },
     '&::after': {
       content: '""',
