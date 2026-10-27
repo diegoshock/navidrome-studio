@@ -1,3 +1,24 @@
+# Studio for Navidrome 0.64.2-studio.8
+
+- Nueva navegación compacta inspirada en la distribución de Hermitage: grupos **Discover**, **Library** y **Playlists**, accesos a favoritos y Now Playing, búsqueda global y usuario/ajustes en la esquina superior derecha.
+- Discover Home reúne álbumes añadidos y reproducidos recientemente, los más reproducidos y una selección diaria de álbumes y canciones. Incluye elección aleatoria de álbum y reproducción aleatoria de canciones mediante el motor existente.
+- Now Playing dispone de vista amplia con portada, metadatos, favorito y cola interactiva. La barra inferior conserva progreso y transporte, y añade calidad/bitrate, pantalla completa, cola y volumen.
+- Menús contextuales de canciones con favorito, filas sin separadores, cuadrícula y lateral más densos, y fondos de artista sin desenfoque. Se conservan el scroll incremental, playlists, búsqueda y selección existentes.
+- Lint, comprobación de tipos, compilación y **94 archivos / 805 pruebas** correctos. Vite conserva únicamente su advertencia conocida por tamaño del bundle.
+- Chromium con backend real y cuatro canciones sintéticas: inicio Discover, estantes, reproducción aleatoria, cola, Now Playing, calidad, controles y adaptación a 1440 × 900 y 390 × 844 comprobados.
+
+## Publicación comprobada
+
+- Revisión `a19e034fae588d2e9b47a4294cf3dd4b75f7a62e`, versión `0.64.2-studio.8`.
+- Digest `sha256:1b8a53af7389a4e33832114f0d51050bb46e453c942c49d46ab972bdd2ea0009`.
+- Imagen pública `ghcr.io/diegoshock/navidrome-studio:latest`, también disponible como `:sha-a19e034fae588d2e9b47a4294cf3dd4b75f7a62e`.
+- [Workflow](https://github.com/diegoshock/navidrome-studio/actions/runs/40513657195): pruebas y publicación correctas.
+- Consulta anónima, descarga y ejecución de la imagen correctas; `--version` devuelve la versión y revisión esperadas.
+
+Las secciones basadas en reproducciones permanecen vacías hasta que Navidrome registre historial. La selección diaria usa la fecha local del navegador. No se ha probado en el Unraid ni con la biblioteca del usuario.
+
+---
+
 # Studio for Navidrome 0.64.2-studio.7
 
 - Icono original (reproducción + niveles de audio), sin reutilizar el logo de Navidrome: SVG negro animado, variantes blanca/negra estáticas, insignia sobre blanco y PNG/ICO para lanzadores. Assets originales bajo Apache-2.0; la aplicación conserva GPLv3.
