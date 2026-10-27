@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     gap: 20,
     padding: '0 18px',
-    borderBottom: `1px solid ${theme.palette.divider}`,
     background: '#0b0b0cf5',
     position: 'sticky',
     top: 0,

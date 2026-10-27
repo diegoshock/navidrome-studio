@@ -6,9 +6,9 @@ import { setSidebarVisibility } from 'react-admin'
 import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  root: { width: ({ narrow }) => (narrow ? 52 : 184), flexShrink: 0 },
+  root: { width: ({ narrow }) => (narrow ? 52 : 220), flexShrink: 0 },
   paper: {
-    width: ({ open }) => (open ? 184 : 52),
+    width: ({ open }) => (open ? 220 : 52),
     top: 0,
     bottom: ({ playing }) =>
       playing ? 'calc(78px + env(safe-area-inset-bottom, 0px))' : 0,

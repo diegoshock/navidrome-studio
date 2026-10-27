@@ -198,12 +198,22 @@ const AlbumListPagination = ({ albumListType, seed, shownSeed, ...rest }) => {
 
 const randomStartingSeed = Math.random().toString()
 
-const AlbumListContent = ({ grid, ...props }) => (
-  <>
-    <StudioLibraryHeader albumListType={props.albumListType} />
-    {grid ? <AlbumGridView {...props} /> : <AlbumTableView {...props} />}
-  </>
-)
+const useContentStyles = makeStyles({
+  root: { display: 'flex', alignItems: 'flex-start', minWidth: 0 },
+  catalogue: { flex: 1, minWidth: 0 },
+})
+
+const AlbumListContent = ({ grid, ...props }) => {
+  const classes = useContentStyles()
+  return (
+    <div className={classes.root}>
+      <StudioLibraryHeader albumListType={props.albumListType} />
+      <div className={classes.catalogue}>
+        {grid ? <AlbumGridView {...props} /> : <AlbumTableView {...props} />}
+      </div>
+    </div>
+  )
+}
 
 const AlbumList = (props) => {
   const shownSeed = useRef(null)

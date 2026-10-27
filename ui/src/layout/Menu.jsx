@@ -69,8 +69,15 @@ const useStyles = makeStyles((theme) => ({
     fontSize: ({ open }) => (open ? 12 : 0),
     borderRadius: 5,
     minWidth: 0,
+    overflow: 'hidden',
     '& .MuiListItemIcon-root': { minWidth: 28, color: 'inherit' },
-    '& .MuiTypography-root': { fontSize: 12 },
+    '& .MuiTypography-root': {
+      minWidth: 0,
+      fontSize: 12,
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
     '& svg': { width: 17, height: 17 },
   },
   playlists: {

@@ -22,7 +22,7 @@ COPY --from=studio-ui /src/ui/build ./ui/build
 ARG STUDIO_REVISION=local
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
     CGO_ENABLED=1 GOMAXPROCS=4 go build -p 4 -tags=netgo,sqlite_fts5,nodynamic \
-    -ldflags="-s -w -linkmode=external -extldflags '-static -latomic' -X github.com/navidrome/navidrome/consts.gitTag=v0.64.2-studio.8 -X github.com/navidrome/navidrome/consts.gitSha=${STUDIO_REVISION}" \
+    -ldflags="-s -w -linkmode=external -extldflags '-static -latomic' -X github.com/navidrome/navidrome/consts.gitTag=v0.64.2-studio.9 -X github.com/navidrome/navidrome/consts.gitSha=${STUDIO_REVISION}" \
     -o /out/navidrome .
 RUN /out/navidrome --version
 

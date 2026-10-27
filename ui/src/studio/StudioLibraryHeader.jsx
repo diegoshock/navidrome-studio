@@ -5,15 +5,43 @@ import { Link } from 'react-router-dom'
 import albumLists from '../album/albumLists'
 import { useStudioLabels } from './useStudioLabels'
 const useStyles = makeStyles((theme) => ({
-  root: { padding: '0 0 16px' },
-  navigation: { display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 16 },
+  root: {
+    flex: '0 0 156px',
+    width: 156,
+    padding: '0 16px 0 0',
+    boxSizing: 'border-box',
+    '@media (max-width:700px)': {
+      flexBasis: 128,
+      width: 128,
+      paddingRight: 8,
+    },
+  },
+  navigation: {
+    position: 'sticky',
+    top: 68,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: 2,
+  },
   tab: {
+    justifyContent: 'flex-start',
     color: theme.palette.text.secondary,
-    padding: '7px 12px',
-    fontSize: 13,
+    padding: '8px 10px',
+    minWidth: 0,
+    fontSize: 12,
+    lineHeight: 1.25,
+    textAlign: 'left',
+    whiteSpace: 'normal',
   },
   active: { color: '#c7ac78', background: theme.palette.action.selected },
-  count: { fontSize: 12, color: theme.palette.text.secondary },
+  count: {
+    display: 'block',
+    margin: '14px 10px 0',
+    fontSize: 11,
+    lineHeight: 1.4,
+    color: theme.palette.text.secondary,
+  },
 }))
 const StudioLibraryHeader = ({ albumListType }) => {
   const classes = useStyles()
@@ -37,12 +65,12 @@ const StudioLibraryHeader = ({ albumListType }) => {
             })}
           </Button>
         ))}
+        {loaded && (
+          <Typography className={classes.count}>
+            {total} {total === 1 ? labels.countOne : labels.count}
+          </Typography>
+        )}
       </nav>
-      {loaded && (
-        <Typography className={classes.count}>
-          {total} {total === 1 ? labels.countOne : labels.count}
-        </Typography>
-      )}
     </section>
   )
 }
