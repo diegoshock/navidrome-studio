@@ -69,7 +69,7 @@ jobs:
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.version=0.64.2-studio.9
+            org.opencontainers.image.version=0.64.2-studio.10
             org.opencontainers.image.url=https://github.com/${{ github.repository }}
           cache-from: type=gha,scope=navidrome-studio
           cache-to: type=gha,mode=max,scope=navidrome-studio
