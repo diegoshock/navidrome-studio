@@ -57,15 +57,21 @@ describe('Play all', () => {
     expect(dispatch).not.toHaveBeenCalled()
     expect(screen.getByRole('button')).not.toBeDisabled()
   })
-  it('retains the shuffled collection limit and active filters', async () => {
+  it('loads the complete shuffled collection and retains active filters', async () => {
     getList.mockResolvedValue({ data: [{ id: 'a' }] })
     render(<PlayAllButton shuffle filters={{ artist_id: 'ar1' }} />)
     fireEvent.click(screen.getByRole('button', { name: 'Aleatorio' }))
     await waitFor(() => expect(dispatch).toHaveBeenCalled())
     expect(getList).toHaveBeenCalledWith('song', {
-      pagination: { page: 1, perPage: 500 },
+      pagination: { page: 1, perPage: 0 },
       sort: { field: 'random', order: 'ASC' },
       filter: { artist_id: 'ar1', missing: false },
     })
+  })
+  it('allows Discover to keep its contextual shuffle label', () => {
+    render(<PlayAllButton shuffle label="Canciones al azar" />)
+    expect(
+      screen.getByRole('button', { name: 'Canciones al azar' }),
+    ).toBeInTheDocument()
   })
 })

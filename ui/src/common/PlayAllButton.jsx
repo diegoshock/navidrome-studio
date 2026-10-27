@@ -13,6 +13,8 @@ export const PlayAllButton = ({
   sort = { field: 'title', order: 'ASC' },
   shuffle = false,
   disabled,
+  label,
+  className,
 }) => {
   const dataProvider = useDataProvider()
   const dispatch = useDispatch()
@@ -23,7 +25,9 @@ export const PlayAllButton = ({
     setLoading(true)
     try {
       const result = await dataProvider.getList('song', {
-        pagination: { page: 1, perPage: shuffle ? 500 : 0 },
+        // Navidrome interprets perPage 0 as the complete matching collection.
+        // This keeps random playback from cycling through a small fixed sample.
+        pagination: { page: 1, perPage: 0 },
         sort: shuffle ? { field: 'random', order: 'ASC' } : sort,
         filter: { ...filters, missing: false },
       })
@@ -44,8 +48,9 @@ export const PlayAllButton = ({
   }
   return (
     <PlaybackButton
-      label={shuffle ? labels.shuffle : labels.playAll}
+      label={label || (shuffle ? labels.shuffle : labels.playAll)}
       secondary={shuffle}
+      className={className}
       disabled={disabled || loading}
       aria-busy={loading}
       onClick={play}

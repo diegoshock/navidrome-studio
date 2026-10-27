@@ -7,14 +7,14 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import ShuffleIcon from '@material-ui/icons/Shuffle'
-import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import { useDataProvider } from 'react-admin'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Artwork } from '../common/Artwork'
 import { AlbumContextMenu } from '../common/ContextMenus'
 import { SongContextMenu } from '../common'
-import { setTrack, shuffleTracks } from '../actions'
+import { PlayAllButton } from '../common/PlayAllButton'
+import { setTrack } from '../actions'
 import { useStudioLabels } from '../studio/useStudioLabels'
 
 const useStyles = makeStyles((theme) => ({
@@ -250,12 +250,6 @@ const DiscoverHome = () => {
         <CircularProgress size={28} />
       </div>
     )
-  const shuffleDaily = () =>
-    dispatch(
-      shuffleTracks(
-        Object.fromEntries(content.dailySongs.map((song) => [song.id, song])),
-      ),
-    )
   const surpriseAlbum = () =>
     content.dailyAlbums[0] &&
     history.push(`/album/${content.dailyAlbums[0].id}/show`)
@@ -275,13 +269,11 @@ const DiscoverHome = () => {
           >
             {labels.pickAlbum}
           </Button>
-          <Button
+          <PlayAllButton
+            shuffle
             className={classes.action}
-            startIcon={<PlayArrowIcon />}
-            onClick={shuffleDaily}
-          >
-            {labels.shuffleSongs}
-          </Button>
+            label={labels.shuffleSongs}
+          />
         </div>
       </section>
       <AlbumShelf
